@@ -797,9 +797,10 @@
 
         // Gemini APIを呼び出す
         async function callGeminiAPI(inputs, count) {
-            const combination = inputs.join(' × ');
-            
-            const prompt = `あなたは革新的なアイデアを生み出すクリエイティブディレクターです。
+    const combination = inputs.join(' × ');
+
+    const prompt = `
+あなたは革新的なアイデアを生み出すクリエイティブディレクターです。
 
 以下の要素を組み合わせた新しい商品・サービスのアイデアを${count}個提案してください。
 
@@ -810,61 +811,37 @@
 {
   "ideas": [
     {
-      "name": "アイデア名（キャッチーで分かりやすい名前）",
-      "description": "このアイデアの詳細な説明（どのような商品・サービスか、どんな価値を提供するか）",
-      "examples": ["具体的な活用例1", "具体的な活用例2", "具体的な活用例3"]
+      "name": "アイデア名",
+      "description": "説明",
+      "examples": ["例1", "例2", "例3"]
     }
   ]
 }
 
-制約条件:
-- 実現可能性を考慮した現実的なアイデア
-- 各要素の特徴を活かした組み合わせ
-- ユーザーにとって分かりやすい説明
-- 不適切な内容は含めない
-- 必ず${count}個のアイデアを提案すること
+JSONのみを出力してください。
+`;
 
-JSONのみを出力してください（説明文などは不要）。`;
+    const response = await fetch("https://ideagenerator.gmo-k-watanabe.workers.dev", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt }),
+    });
 
-            const response = await fetch("https://ideagenerator.gmo-k-watanabe.workers.dev", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    prompt: prompt,
-  }),
-});
-                    generationConfig: {
-                        temperature: 0.9,
-                        topK: 40,
-                        topP: 0.95,
-                        maxOutputTokens: 2048,
-                    }
-                })
-            });
+    if (!response.ok) {
+        throw new Error(`Worker Error: ${response.status}`);
+    }
 
-            if (!response.ok) {
-                throw new Error(`API Error: ${response.status} ${response.statusText}`);
-            }
+    const data = await response.json();
 
-            const data = await response.json();
-            
-            if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
-                throw new Error('APIから有効なレスポンスが得られませんでした');
-            }
+    // Worker が返す { text: "..." } を処理
+    const jsonText = data.text;
+    const result = JSON.parse(jsonText);
 
-            const text = data.candidates[0].content.parts[0].text;
-            
-            // JSONを抽出（コードブロックがある場合に対応）
-            let jsonText = text;
-            const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/) || text.match(/```([\s\S]*?)```/);
-            if (jsonMatch) {
-                jsonText = jsonMatch[1];
-            }
-            
-            const result = JSON.parse(jsonText);
-            return result.ideas;
+    return result.ideas;
+}
+
         }
 
         // アイデアを表示
