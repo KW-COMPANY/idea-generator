@@ -836,8 +836,11 @@ JSONのみを出力してください。
     const data = await response.json();
 
     // Worker が返す { text: "..." } を処理
-    const jsonText = data.text;
-    const result = JSON.parse(jsonText);
+    if (!data || !data.ideas) {
+    throw new Error('Worker から正しいJSONが返ってきませんでした');
+}
+
+const result = data;
 
     return result.ideas;
 }
