@@ -822,12 +822,12 @@ JSONのみを出力してください。
 `;
 
     const response = await fetch("https://ideagenerator.gmo-k-watanabe.workers.dev", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ prompt }),
-    });
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ prompt }),
+});
 
     if (!response.ok) {
         throw new Error(`Worker Error: ${response.status}`);
