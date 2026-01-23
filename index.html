@@ -768,15 +768,7 @@
             if (hasInappropriate) {
                 showError('不適切な内容が含まれています。別の言葉を使用してください。');
                 return;
-            }
-
-            // APIキーチェック
-            const apiKey = document.getElementById('apiKey').value.trim();
-            if (!apiKey) {
-                showError('Google Gemini API Keyを設定してください');
-                toggleSettings();
-                return;
-            }
+            }         
 
             currentCombination = inputs;
 
@@ -788,7 +780,7 @@
 
             try {
                 const ideaCount = parseInt(document.getElementById('ideaCount').value);
-                const ideas = await callGeminiAPI(inputs, ideaCount, apiKey);
+                const ideas = await callGeminiAPI(inputs, ideaCount);
                 
                 currentIdeas = ideas;
                 displayIdeas(ideas, inputs);
@@ -804,7 +796,7 @@
         }
 
         // Gemini APIを呼び出す
-        async function callGeminiAPI(inputs, count, apiKey) {
+        async function callGeminiAPI(inputs, count) {
             const combination = inputs.join(' × ');
             
             const prompt = `あなたは革新的なアイデアを生み出すクリエイティブディレクターです。
