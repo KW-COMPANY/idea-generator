@@ -607,13 +607,6 @@
                     <label>生成するアイデア数（3〜5個）</label>
                     <input type="number" id="ideaCount" min="3" max="5" value="3">
                 </div>
-                <div class="setting-item">
-                    <label>Google Gemini API Key（必須）</label>
-                    <input type="text" id="apiKey" placeholder="AIzaSy...">
-                    <small style="color: #999; display: block; margin-top: 5px;">
-                        無料で取得できます: <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a>
-                    </small>
-                </div>
             </div>
 
             <!-- 入力セクション -->
@@ -652,7 +645,7 @@
                     <div class="action-buttons">
                         <button class="action-btn save-btn" onclick="saveIdeas()">💾 保存</button>
                         <button class="action-btn share-btn" onclick="openShareModal()">🔗 シェア</button>
-                        <button class="action-btn pdf-btn" onclick="exportPDF()">📄 PDF出力</button>
+                        <button class="action-btn pdf-btn" onclick="exportPDF()">📄 テキスト出力</button>
                     </div>
                 </div>
                 <div id="ideasContainer"></div>
@@ -692,7 +685,8 @@
     </div>
 
     <script>
-  const GEMINI_API_KEY = "AIzaSyBV0VWzFTwhgtL7ToL52eYlR9f-yY1GmOk";
+const WORKER_URL = "https://idea-generator-api.gmo-k-watanabe.workers.dev";
+
         let inputCount = 2;
         let currentIdeas = [];
         let currentCombination = [];
@@ -768,7 +762,7 @@
             if (hasInappropriate) {
                 showError('不適切な内容が含まれています。別の言葉を使用してください。');
                 return;
-            }         
+            }
 
             currentCombination = inputs;
 
@@ -797,52 +791,33 @@
 
         // Gemini APIを呼び出す
         async function callGeminiAPI(inputs, count) {
-    const combination = inputs.join(' × ');
-
-    const prompt = `
-あなたは革新的なアイデアを生み出すクリエイティブディレクターです。
-
-以下の要素を組み合わせた新しい商品・サービスのアイデアを${count}個提案してください。
-
-組み合わせる要素: ${combination}
-
-各アイデアは以下のJSON形式で出力してください：
-
-{
-  "ideas": [
-    {
-      "name": "アイデア名",
-      "description": "説明",
-      "examples": ["例1", "例2", "例3"]
-    }
-  ]
-}
-
-JSONのみを出力してください。
-`;
-
-    const response = await fetch("https://ideagenerator.gmo-k-watanabe.workers.dev", {
+  const response = await fetch(WORKER_URL, {
     method: "POST",
     headers: {
-        "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify({ prompt }),
-});
+    body: JSON.stringify({
+      inputs: inputs,
+      count: count
+    })
+  });
 
-    if (!response.ok) {
-        throw new Error(`Worker Error: ${response.status}`);
-    }
+  if (!response.ok) {
+    const text = await response.text();
+throw new Error(text || "サーバーエラーが発生しました");
+  }
 
-    const data = await response.json();
+  const data = await response.json();
 
-    // Worker が返す { text: "..." } を処理
-    if (!data || !data.ideas) {
-    throw new Error('Worker から正しいJSONが返ってきませんでした');
-}
+  if (!data.ideas || !Array.isArray(data.ideas)) {
+    throw new Error("不正なレスポンス形式です");
+  }
 
-const result = data;
-
-    return result.ideas;
+  return data.ideas.map(idea => ({
+    name: idea.title,
+    description: idea.description,
+    examples: idea.examples || []
+  }));
 }
 
 
@@ -863,7 +838,7 @@ const result = data;
                     <div class="idea-examples">
                         <h4>💡 活用例</h4>
                         <ul>
-                            ${idea.examples.map(ex => `<li>${escapeHtml(ex)}</li>`).join('')}
+                            ${(idea.examples || []).map(ex => `<li>${escapeHtml(ex)}</li>`).join('')}
                         </ul>
                     </div>
                 `;
@@ -981,6 +956,10 @@ const result = data;
 
         // Twitter シェア
         function shareToTwitter() {
+  if (!currentIdeas.length) {
+    alert('先にアイデアを生成してください');
+    return;
+  }
             const text = `${currentCombination.join(' × ')} を組み合わせたアイデア\n\n${currentIdeas[0].name}\n${currentIdeas[0].description}`;
             const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
             window.open(url, '_blank');
@@ -988,12 +967,20 @@ const result = data;
 
         // Facebook シェア
         function shareToFacebook() {
+  if (!currentIdeas.length) {
+    alert('先にアイデアを生成してください');
+    return;
+  }
             const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
             window.open(url, '_blank');
         }
 
         // LINE シェア
         function shareToLine() {
+  if (!currentIdeas.length) {
+    alert('先にアイデアを生成してください');
+    return;
+  }
             const text = `${currentCombination.join(' × ')} のアイデア: ${currentIdeas[0].name}`;
             const url = `https://line.me/R/msg/text/?${encodeURIComponent(text)}`;
             window.open(url, '_blank');
@@ -1001,73 +988,51 @@ const result = data;
 
         // クリップボードにコピー
         function copyToClipboard() {
-            let text = `【${currentCombination.join(' × ')}】のアイデア\n\n`;
-            currentIdeas.forEach((idea, index) => {
-                text += `${index + 1}. ${idea.name}\n${idea.description}\n\n`;
-            });
+  if (!currentIdeas.length) {
+    alert('先にアイデアを生成してください');
+    return;
+  }
 
-            navigator.clipboard.writeText(text).then(() => {
-                alert('📋 クリップボードにコピーしました！');
-                closeShareModal();
-            });
-        }
+  const text = `${currentCombination.join(' × ')} を組み合わせたアイデア\n\n${currentIdeas[0].name}\n${currentIdeas[0].description}`;
+  navigator.clipboard.writeText(text);
+  alert('📋 クリップボードにコピーしました！');
+}
 
         // PDF出力
         function exportPDF() {
-            // jsPDFライブラリを動的に読み込み
-            if (typeof window.jspdf === 'undefined') {
-                const script = document.createElement('script');
-                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-                script.onload = () => generatePDF();
-                document.head.appendChild(script);
-            } else {
-                generatePDF();
-            }
-        }
+  if (!currentIdeas.length) {
+    alert('先にアイデアを生成してください');
+    return;
+  }
 
-        function generatePDF() {
-            // 簡易版: テキストファイルとしてダウンロード
-            let content = `アイデア組み合わせジェネレーター\n`;
-            content += `組み合わせ: ${currentCombination.join(' × ')}\n`;
-            content += `生成日時: ${new Date().toLocaleString('ja-JP')}\n\n`;
-            content += `${'='.repeat(50)}\n\n`;
+  const content = `
+${currentCombination.join(' × ')} を組み合わせたアイデア
 
-            currentIdeas.forEach((idea, index) => {
-                content += `【アイデア ${index + 1}】\n`;
-                content += `名前: ${idea.name}\n\n`;
-                content += `説明:\n${idea.description}\n\n`;
-                content += `活用例:\n`;
-                idea.examples.forEach((ex, i) => {
-                    content += `${i + 1}. ${ex}\n`;
-                });
-                content += `\n${'='.repeat(50)}\n\n`;
-            });
+${currentIdeas.map(idea => `
+■ ${idea.name}
+${idea.description}
+`).join('\n')}
+`;
 
-            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `アイデア_${currentCombination.join('×')}_${Date.now()}.txt`;
-            a.click();
-            URL.revokeObjectURL(url);
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
 
-            alert('📄 テキストファイルとしてダウンロードしました！');
-        }
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'ideas.txt';
+  document.body.appendChild(a);
+  a.click();
+
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  alert('📄 テキストファイルとしてダウンロードしました！');
+}
 
         // ページ読み込み時に履歴を表示
         window.addEventListener('load', () => {
             displayHistory();
             
-            // APIキーを保存から復元
-            const savedApiKey = localStorage.getItem('geminiApiKey');
-            if (savedApiKey) {
-                document.getElementById('apiKey').value = savedApiKey;
-            }
-
-            // APIキーの保存
-            document.getElementById('apiKey').addEventListener('change', (e) => {
-                localStorage.setItem('geminiApiKey', e.target.value);
-            });
         });
     </script>
 </body>
