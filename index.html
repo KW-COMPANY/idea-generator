@@ -835,13 +835,7 @@ async function callGeminiAPI(inputs, count) {
   return [];
 }
 
-  return data.ideas.map(idea => ({
-    name: idea.title,
-    description: idea.description,
-    examples: idea.examples || []
-  }));
 }
-
 
         // アイデアを表示
         function displayIdeas(ideas, inputs) {
