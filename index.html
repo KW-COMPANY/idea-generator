@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+sync function callGemin<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -809,8 +809,9 @@ throw new Error(text || "サーバーエラーが発生しました");
 
   const data = await response.json();
 
-async function callGeminiAPI(inputs, count, apiKey) {
-  const response = await fetch("https://idea-generator-api.gmo-k-watanabe.workers.dev", {
+// Gemini APIを呼び出す（デバッグ用）
+async function callGeminiAPI(inputs, count) {
+  const response = await fetch(WORKER_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -818,14 +819,19 @@ async function callGeminiAPI(inputs, count, apiKey) {
     body: JSON.stringify({ inputs, count })
   });
 
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(text || "サーバーエラーが発生しました");
+  }
+
   const data = await response.json();
 
-  // 🔥 追加（ここが一番重要）
+  // 🔥 今やりたいのはこれだけ
   console.log("RAW TEXT ↓↓↓");
   console.log(data.rawText);
   alert(data.rawText);
 
-  // 一旦ダミーで空配列を返す（後で直す）
+  // 一旦ダミー（表示させないため）
   return [];
 }
 
