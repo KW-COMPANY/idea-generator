@@ -809,8 +809,8 @@ throw new Error(text || "サーバーエラーが発生しました");
 
   const data = await response.json();
 
-  if (!data.ideas || !Array.isArray(data.ideas)) {
-    throw new Error("不正なレスポンス形式です");
+  console.log("RAW:", data.rawText);
+  alert(data.rawText);
   }
 
   return data.ideas.map(idea => ({
