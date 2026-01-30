@@ -809,9 +809,25 @@ throw new Error(text || "サーバーエラーが発生しました");
 
   const data = await response.json();
 
-  console.log("RAW:", data.rawText);
+async function callGeminiAPI(inputs, count, apiKey) {
+  const response = await fetch("https://idea-generator-api.gmo-k-watanabe.workers.dev", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ inputs, count })
+  });
+
+  const data = await response.json();
+
+  // 🔥 追加（ここが一番重要）
+  console.log("RAW TEXT ↓↓↓");
+  console.log(data.rawText);
   alert(data.rawText);
-  }
+
+  // 一旦ダミーで空配列を返す（後で直す）
+  return [];
+}
 
   return data.ideas.map(idea => ({
     name: idea.title,
