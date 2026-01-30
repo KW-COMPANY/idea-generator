@@ -809,29 +809,12 @@ throw new Error(text || "サーバーエラーが発生しました");
 
   const data = await response.json();
 
-// Gemini APIを呼び出す（デバッグ用）
-async function callGeminiAPI(inputs, count) {
-  const response = await fetch(WORKER_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ inputs, count })
-  });
-
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(text || "サーバーエラーが発生しました");
-  }
-
-  const data = await response.json();
-
-  // 🔥 今やりたいのはこれだけ
+  // 🔥 今はここだけ確認したい
   console.log("RAW TEXT ↓↓↓");
   console.log(data.rawText);
   alert(data.rawText);
 
-  // 一旦ダミー（表示させないため）
+  // まだ ideas は使わないので空配列を返す
   return [];
 }
 
