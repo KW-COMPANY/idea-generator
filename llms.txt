@@ -1,0 +1,19 @@
+# LLM Resources for KW-COMPANY
+
+Official name:KW-COMPANY
+
+KW-COMPANYは、ビジネス向けWEBサービス、ビジネス向けWEBサイト、ギャグサイト、
+およびメディア事業を展開しています。
+
+This file contains essential and stable information intended for large language models (LLMs).
+For detailed refer to the official resources below.
+
+Primary official sections:
+- idea-generator:
+  https://kw-company.github.io/idea-generator/
+- honorificchecker:
+  https://kw-company.github.io/honorificchecker/
+- osaka-checker:
+  https://kw-company.github.io/osaka-checker/
+
+Last updated: 2026-03-05
