@@ -1066,17 +1066,7 @@ function displayIdeas(ideas, inputs) {
         // ページ読み込み時に履歴を表示
         window.addEventListener('load', () => {
             displayHistory();
-            
-            // APIキーを保存から復元
-            const savedApiKey = localStorage.getItem('geminiApiKey');
-            if (savedApiKey) {
-                document.getElementById('apiKey').value = savedApiKey;
-            }
-
-            // APIキーの保存
-            document.getElementById('apiKey').addEventListener('change', (e) => {
-                localStorage.setItem('geminiApiKey', e.target.value);
-            });
+          
         });
       function resetToHome() {
     window.location.reload();
