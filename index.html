@@ -859,20 +859,18 @@ function displayIdeas(ideas, inputs) {
             </div>
 
             <div style="margin-top:15px;">
-               <button onclick="improveIdea('${escapeHtml(idea.name)}')">
-  🤖 AIで改良
+             <button onclick="improveIdea('${escapeHtml(idea.name)}')"
+    style="
+        background:#667eea;
+        color:white;
+        border:none;
+        padding:10px 16px;
+        border-radius:8px;
+        cursor:pointer;
+        font-size:0.9em;
+    ">
+    🤖 AIで改良
 </button>
-                    style="
-                        background:#667eea;
-                        color:white;
-                        border:none;
-                        padding:10px 16px;
-                        border-radius:8px;
-                        cursor:pointer;
-                        font-size:0.9em;
-                    ">
-                    🤖 AIで改良
-                </button>
                 <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
 
 <button onclick="generatePitch('${escapeHtml(idea.name)}')">
