@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<!-- Google tag (gtag.js) -->
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VDPER87RQ8"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -609,7 +609,6 @@
         </header>
 
         <div class="main-card">
-            <!-- 設定パネル -->
             <div class="settings-toggle">
                 <button class="settings-btn" onclick="toggleSettings()">⚙️ 設定</button>
             </div>
@@ -621,7 +620,6 @@
   </div>
 </div>
 
-            <!-- 入力セクション -->
             <div class="input-section">
                 <div class="input-grid" id="inputGrid">
                     <div class="input-wrapper">
@@ -636,21 +634,17 @@
                 </button>
             </div>
 
-            <!-- 生成ボタン -->
             <button class="generate-btn" onclick="generateIdeas()" id="generateBtn">
                 ✨ アイデアを生成する
             </button>
 
-            <!-- ローディング -->
             <div class="loading" id="loading">
                 <div class="spinner"></div>
                 <p>AIがアイデアを考え中...</p>
             </div>
 
-            <!-- エラーメッセージ -->
             <div class="error-message" id="errorMessage"></div>
 
-            <!-- 結果セクション -->
             <div class="results-section" id="resultsSection">
                 <div class="results-header">
                     <h2 class="results-title">💡 生成されたアイデア</h2>
@@ -663,7 +657,6 @@
                 <div id="ideasContainer"></div>
             </div>
 
-            <!-- 履歴セクション -->
             <div class="history-section" id="historySection" style="display: none;">
                 <div class="history-title">
                     📚 生成履歴
@@ -674,7 +667,6 @@
         </div>
     </div>
 
-    <!-- シェアモーダル -->
     <div class="share-modal" id="shareModal">
         <div class="share-content">
             <h3 style="margin-bottom: 15px; color: #667eea;">シェアする</h3>
@@ -703,13 +695,11 @@ const WORKER_URL = "https://idea-generator-api.gmo-k-watanabe.workers.dev";
         let currentIdeas = [];
         let currentCombination = [];
 
-        // 設定パネルの切り替え
         function toggleSettings() {
             const panel = document.getElementById('settingsPanel');
             panel.classList.toggle('active');
         }
 
-        // 入力フィールドを追加
         function addInput() {
             if (inputCount >= 4) {
                 alert('最大4個までです');
@@ -752,12 +742,10 @@ function removeInput(btn) {
     });
 }
             
-            // インデックスを再割り当て
             const inputs = document.querySelectorAll('.input-field');
            inputCount = inputs.length;
         }
 
-        // 不適切なコンテンツチェック
         function containsInappropriateContent(text) {
             const inappropriateKeywords = [
                 'アダルト', 'エロ', '性的', 'ポルノ', 'セックス', 
@@ -770,9 +758,7 @@ function removeInput(btn) {
             );
         }
 
-        // アイデア生成
         async function generateIdeas() {
-            // 入力値を取得
             const inputs = Array.from(document.querySelectorAll('.input-field'))
                 .map(input => input.value.trim())
                 .filter(value => value !== '');
@@ -782,18 +768,15 @@ function removeInput(btn) {
                 return;
             }
 
-            // 不適切なコンテンツチェック
             const hasInappropriate = inputs.some(input => containsInappropriateContent(input));
             if (hasInappropriate) {
                 showError('不適切な内容が含まれています。別の言葉を使用してください。');
                 return;
             }
 
-            // APIキーチェック
 
             currentCombination = inputs;
 
-            // UI更新
             document.getElementById('generateBtn').disabled = true;
             document.getElementById('loading').classList.add('active');
             document.getElementById('resultsSection').classList.remove('active');
@@ -816,7 +799,6 @@ function removeInput(btn) {
             }
         }
 
-        // Gemini APIを呼び出す
         async function callGeminiAPI(inputs, count) {
   const response = await fetch(WORKER_URL, {
     method: "POST",
@@ -847,7 +829,6 @@ function removeInput(btn) {
   }));
 }
 
-// アイデアを表示
 function displayIdeas(ideas, inputs) {
     const container = document.getElementById('ideasContainer');
     container.innerHTML = '';
@@ -907,14 +888,12 @@ function displayIdeas(ideas, inputs) {
     document.getElementById('resultsSection').classList.add('active');
 }
 
-        // HTMLエスケープ
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
 
-        // エラー表示
         function showError(message) {
             const errorEl = document.getElementById('errorMessage');
             errorEl.textContent = message;
@@ -925,7 +904,6 @@ function displayIdeas(ideas, inputs) {
             document.getElementById('errorMessage').classList.remove('active');
         }
 
-        // 履歴に保存
         function saveToHistory(inputs, ideas) {
             const history = JSON.parse(localStorage.getItem('ideaHistory') || '[]');
             
@@ -935,7 +913,6 @@ function displayIdeas(ideas, inputs) {
                 date: new Date().toLocaleString('ja-JP')
             });
 
-            // 最大20件まで保存
             if (history.length > 20) {
                 history.pop();
             }
@@ -944,7 +921,6 @@ function displayIdeas(ideas, inputs) {
             displayHistory();
         }
 
-        // 履歴を表示
         function displayHistory() {
             const history = JSON.parse(localStorage.getItem('ideaHistory') || '[]');
             
@@ -969,7 +945,6 @@ function displayIdeas(ideas, inputs) {
             });
         }
 
-        // 履歴から読み込み
         function loadFromHistory(index) {
             const history = JSON.parse(localStorage.getItem('ideaHistory') || '[]');
             const item = history[index];
@@ -982,7 +957,6 @@ function displayIdeas(ideas, inputs) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 履歴をクリア
         function clearHistory() {
             if (confirm('履歴を全て削除しますか？')) {
                 localStorage.removeItem('ideaHistory');
@@ -990,7 +964,6 @@ function displayIdeas(ideas, inputs) {
             }
         }
 
-        // アイデアを保存
         function saveIdeas() {
             const savedIdeas = JSON.parse(localStorage.getItem('savedIdeas') || '[]');
             
@@ -1004,7 +977,6 @@ function displayIdeas(ideas, inputs) {
             alert('💾 アイデアを保存しました！');
         }
 
-        // シェアモーダルを開く
         function openShareModal() {
             document.getElementById('shareModal').classList.add('active');
         }
@@ -1013,27 +985,23 @@ function displayIdeas(ideas, inputs) {
             document.getElementById('shareModal').classList.remove('active');
         }
 
-        // Twitter シェア
         function shareToTwitter() {
             const text = `${currentCombination.join(' × ')} を組み合わせたアイデア\n\n${currentIdeas[0].name}\n${currentIdeas[0].description}`;
             const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
             window.open(url, '_blank');
         }
 
-        // Facebook シェア
         function shareToFacebook() {
             const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
             window.open(url, '_blank');
         }
 
-        // LINE シェア
         function shareToLine() {
             const text = `${currentCombination.join(' × ')} のアイデア: ${currentIdeas[0].name}`;
             const url = `https://line.me/R/msg/text/?${encodeURIComponent(text)}`;
             window.open(url, '_blank');
         }
 
-        // クリップボードにコピー
         function copyToClipboard() {
             let text = `【${currentCombination.join(' × ')}】のアイデア\n\n`;
             currentIdeas.forEach((idea, index) => {
@@ -1046,7 +1014,6 @@ function displayIdeas(ideas, inputs) {
             });
         }
 
-        // PDF出力
         function exportPDF() {
             // jsPDFライブラリを動的に読み込み
             if (typeof window.jspdf === 'undefined') {
@@ -1088,7 +1055,6 @@ function displayIdeas(ideas, inputs) {
             alert('📄 テキストファイルとしてダウンロードしました！');
         }
 
-        // ページ読み込み時に履歴を表示
         window.addEventListener('load', () => {
             displayHistory();
           
@@ -1130,7 +1096,7 @@ async function improveIdea(title){
     }
 
 }
-// ★AIピッチ資料生成
+
 async function generatePitch(title){
 
     try{
@@ -1167,7 +1133,7 @@ async function generatePitch(title){
     }
 
 }
-// ★LP生成AI
+
 async function generateLP(title){
 
     try{
@@ -1216,7 +1182,7 @@ async function generateLP(title){
     }
 
 }
-// ★売上シミュレーションAI
+
 async function generatePlan(title){
 
     try{
