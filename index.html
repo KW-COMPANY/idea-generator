@@ -836,30 +836,51 @@ const WORKER_URL = "https://idea-generator-api.gmo-k-watanabe.workers.dev";
   }));
 }
 
+// アイデアを表示
+function displayIdeas(ideas, inputs) {
+    const container = document.getElementById('ideasContainer');
+    container.innerHTML = '';
 
-        // アイデアを表示
-        function displayIdeas(ideas, inputs) {
-            const container = document.getElementById('ideasContainer');
-            container.innerHTML = '';
+    const combination = inputs.join(' × ');
+    
+    ideas.forEach((idea, index) => {
+        const card = document.createElement('div');
+        card.className = 'idea-card';
+        card.innerHTML = `
+            <div class="idea-number">アイデア ${index + 1}</div>
 
-            const combination = inputs.join(' × ');
-            
-            ideas.forEach((idea, index) => {
-                const card = document.createElement('div');
-                card.className = 'idea-card';
-                card.innerHTML = `
-                    <div class="idea-number">アイデア ${index + 1}</div>
-                    <h3 class="idea-name">${escapeHtml(idea.name)}</h3>
-                    <p class="idea-description">${escapeHtml(idea.description)}</p>
-                    <div class="idea-examples">
-                        <h4>💡 活用例</h4>
-                        <ul>
-                            ${idea.examples.map(ex => `<li>${escapeHtml(ex)}</li>`).join('')}
-                        </ul>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
+            <h3 class="idea-name">${escapeHtml(idea.name)}</h3>
+
+            <p class="idea-description">${escapeHtml(idea.description)}</p>
+
+            <div class="idea-examples">
+                <h4>💡 活用例</h4>
+                <ul>
+                    ${idea.examples.map(ex => `<li>${escapeHtml(ex)}</li>`).join('')}
+                </ul>
+            </div>
+
+            <div style="margin-top:15px;">
+                <button 
+                    onclick="improveIdea('${escapeHtml(idea.name)}')" 
+                    style="
+                        background:#667eea;
+                        color:white;
+                        border:none;
+                        padding:10px 16px;
+                        border-radius:8px;
+                        cursor:pointer;
+                        font-size:0.9em;
+                    ">
+                    🤖 AIで改良
+                </button>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+
+    document.getElementById('resultsSection').classList.add('active');
+}
 
             document.getElementById('resultsSection').classList.add('active');
         }
