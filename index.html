@@ -731,23 +731,25 @@ const WORKER_URL = "https://idea-generator-api.gmo-k-watanabe.workers.dev";
             }
         }
 
-        // 入力フィールドを削除
 function removeInput(btn) {
 
-    // ★ここに追加（最初）
-    if (inputCount <= 2) return;
+    const inputs = document.querySelectorAll('.input-field');
+
+    if (inputs.length <= 2) {
+        alert('最低2つは必要です');
+        return;
+    }
 
     btn.parentElement.remove();
-    inputCount--;
+
+    const updatedInputs = document.querySelectorAll('.input-field');
+    inputCount = updatedInputs.length;
+
     document.getElementById('addBtn').disabled = false;
 
-    // インデックスを再割り当て
-    const inputs = document.querySelectorAll('.input-field');
-    inputs.forEach((input, index) => {
+    updatedInputs.forEach((input, index) => {
         input.dataset.index = index;
     });
-
-    inputCount = inputs.length; // ←これも入れると安定
 }
             
             // インデックスを再割り当て
