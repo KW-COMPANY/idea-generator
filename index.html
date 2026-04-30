@@ -1090,8 +1090,6 @@ function displayIdeas(ideas, inputs) {
     window.location.reload();
 }
 
-
-// ★ここに追加
 async function improveIdea(title){
 
     try{
@@ -1121,6 +1119,139 @@ async function improveIdea(title){
 
     }catch(error){
         alert("AI改良に失敗しました: " + error.message);
+        console.error(error);
+    }
+
+}
+// ★AIピッチ資料生成
+async function generatePitch(title){
+
+    try{
+
+        const response = await fetch(WORKER_URL + "/pitch", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify({
+                title: title
+            })
+        });
+
+        if(!response.ok){
+            const text = await response.text();
+            throw new Error(text);
+        }
+
+        const data = await response.json();
+
+        let text = "【AIピッチ資料】\n\n";
+
+        data.slides.forEach((slide,i)=>{
+            text += "■ " + slide.title + "\n";
+            text += slide.content + "\n\n";
+        });
+
+        alert(text);
+
+    }catch(error){
+        alert("ピッチ資料生成に失敗しました: " + error.message);
+        console.error(error);
+    }
+
+}
+// ★LP生成AI
+async function generateLP(title){
+
+    try{
+
+        const response = await fetch(WORKER_URL + "/lp", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify({
+                title: title
+            })
+        });
+
+        if(!response.ok){
+            const text = await response.text();
+            throw new Error(text);
+        }
+
+        const data = await response.json();
+
+        let text = "【LP構成】\n\n";
+
+        text += "■ キャッチコピー\n";
+        text += data.catch + "\n\n";
+
+        text += "■ 問題提起\n";
+        text += data.problem + "\n\n";
+
+        text += "■ 解決策\n";
+        text += data.solution + "\n\n";
+
+        text += "■ 特徴\n";
+        data.features.forEach(f=>{
+            text += "・" + f + "\n";
+        });
+
+        text += "\n■ CTA\n";
+        text += data.cta;
+
+        alert(text);
+
+    }catch(error){
+        alert("LP生成に失敗しました: " + error.message);
+        console.error(error);
+    }
+
+}
+// ★売上シミュレーションAI
+async function generatePlan(title){
+
+    try{
+
+        const response = await fetch(WORKER_URL + "/plan", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify({
+                title: title
+            })
+        });
+
+        if(!response.ok){
+            const text = await response.text();
+            throw new Error(text);
+        }
+
+        const data = await response.json();
+
+        let text = "【売上シミュレーション】\n\n";
+
+        text += "■ ビジネスモデル\n";
+        text += data.model + "\n\n";
+
+        text += "■ 価格\n";
+        text += data.price + "\n\n";
+
+        text += "■ 想定ユーザー数\n";
+        text += data.users + "\n\n";
+
+        text += "■ 月売上\n";
+        text += data.monthly + "\n\n";
+
+        text += "■ 年売上\n";
+        text += data.yearly;
+
+        alert(text);
+
+    }catch(error){
+        alert("売上シミュレーション生成に失敗しました: " + error.message);
         console.error(error);
     }
 
