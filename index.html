@@ -874,6 +874,21 @@ function displayIdeas(ideas, inputs) {
                     ">
                     🤖 AIで改良
                 </button>
+                <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+
+<button onclick="generatePitch('${escapeHtml(idea.name)}')">
+📊 ピッチ資料
+</button>
+
+<button onclick="generateLP('${escapeHtml(idea.name)}')">
+🌐 LP生成
+</button>
+
+<button onclick="generatePlan('${escapeHtml(idea.name)}')">
+📈 売上シミュレーション
+</button>
+
+</div>
             </div>
         `;
         container.appendChild(card);
