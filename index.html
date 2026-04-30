@@ -739,9 +739,7 @@ const WORKER_URL = "https://idea-generator-api.gmo-k-watanabe.workers.dev";
             
             // インデックスを再割り当て
             const inputs = document.querySelectorAll('.input-field');
-            inputs.forEach((input, index) => {
-                input.dataset.index = index;
-            });
+           inputCount = inputs.length;
         }
 
         // 不適切なコンテンツチェック
