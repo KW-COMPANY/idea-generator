@@ -859,7 +859,9 @@ function displayIdeas(ideas, inputs) {
             </div>
 
             <div style="margin-top:15px;">
-                <button.onclick = () => improveIdea(idea.name); 
+               <button onclick="improveIdea('${escapeHtml(idea.name)}')">
+  🤖 AIで改良
+</button>
                     style="
                         background:#667eea;
                         color:white;
