@@ -1231,5 +1231,86 @@ async function generatePlan(title){
     llms.txt
   </a>
 </footer>
+<script>
+
+function showError(message){
+  const el = document.getElementById("errorMessage");
+  el.textContent = message;
+  el.classList.add("active");
+}
+
+function displayIdeas(ideas){
+
+  const container = document.getElementById("ideasContainer");
+  container.innerHTML = "";
+
+  ideas.forEach((idea,index)=>{
+
+    const card = document.createElement("div");
+    card.className = "idea-card";
+
+    card.innerHTML = `
+      <div class="idea-number">アイデア ${index+1}</div>
+      <div class="idea-name">${idea.title}</div>
+      <div class="idea-description">${idea.description}</div>
+    `;
+
+    container.appendChild(card);
+
+  });
+
+  document.getElementById("resultsSection").classList.add("active");
+
+}
+
+async function generateIdeas(){
+
+  const inputs = Array.from(document.querySelectorAll('.input-field'))
+    .map(input => input.value.trim())
+    .filter(value => value !== '');
+
+  if(inputs.length < 2){
+    showError("少なくとも2つ入力してください");
+    return;
+  }
+
+  document.getElementById("loading").classList.add("active");
+
+  try{
+
+    const res = await fetch("https://idea-generator-api.gmo-k-watanabe.workers.dev",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        inputs:inputs
+      })
+    });
+
+    if(!res.ok){
+      throw new Error("Worker通信エラー");
+    }
+
+    const data = await res.json();
+
+    console.log(data);
+
+    displayIdeas(data.ideas || []);
+
+  }catch(err){
+
+    console.error(err);
+    showError("アイデア生成に失敗しました: "+err.message);
+
+  }finally{
+
+    document.getElementById("loading").classList.remove("active");
+
+  }
+
+}
+
+</script>
 </body>
 </html>
