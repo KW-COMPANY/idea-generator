@@ -619,7 +619,12 @@
     <input type="number" id="ideaCount" min="3" max="5" value="3">
   </div>
 </div>
+const ideaCount = document.getElementById("ideaCount").value
 
+body: JSON.stringify({
+  inputs: inputs,
+  ideaCount: ideaCount
+})
             <div class="input-section">
                 <div class="input-grid" id="inputGrid">
                     <div class="input-wrapper">
