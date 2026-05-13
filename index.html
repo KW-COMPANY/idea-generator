@@ -429,9 +429,9 @@ card.innerHTML=`
 
 <div class="section-title">収益モデル</div>
 <div class="revenue-box">
-モデル: ${idea.revenue.model}<br>
-価格: ${idea.revenue.price}<br>
-月商予測: ${idea.revenue.monthly}
+モデル: ${idea.revenue?.model ?? "-"}<br>
+価格: ${idea.revenue?.price ?? "-"}<br>
+月商予測: ${idea.revenue?.monthly ?? "-"}
 </div>
 <hr>
 
