@@ -339,7 +339,7 @@ inputCount=document.querySelectorAll(".input-field").length;
 }
 
 async function generateIdeas(){
-
+document.getElementById("errorMessage").classList.remove("active")
 const inputs=[...document.querySelectorAll(".input-field")]
 .map(i=>i.value.trim())
 .filter(v=>v!=="")
