@@ -485,7 +485,25 @@ const el=document.getElementById("errorMessage")
 el.textContent=msg
 el.classList.add("active")
 }
+function copyIdea(index){
 
+const idea = window.generatedIdeas[index]
+
+const text = `
+${idea.title}
+
+${idea.description}
+
+市場性: ${idea.score?.market ?? "-"}
+収益性: ${idea.score?.profit ?? "-"}
+実現性: ${idea.score?.feasibility ?? "-"}
+`
+
+navigator.clipboard.writeText(text)
+
+alert("アイデアをコピーしました")
+
+}
 </script>
 
 </body>
