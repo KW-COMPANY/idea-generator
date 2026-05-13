@@ -16,4 +16,4 @@ Primary official sections:
 - osaka-checker:
   https://kw-company.github.io/osaka-checker/
 
-Last updated: 2026-03-05
+Last updated: 2026-05-13
