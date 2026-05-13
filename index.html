@@ -215,6 +215,27 @@ padding:14px;
 border-radius:12px;
 margin-top:10px;
 }
+/* ========================
+生成数設定
+======================== */
+
+.settings-box{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:20px;
+color:white;
+font-weight:600;
+}
+
+.settings-input{
+width:80px;
+padding:8px;
+border-radius:8px;
+border:none;
+font-size:1em;
+text-align:center;
+}
 </style>
 </head>
 
@@ -413,31 +434,6 @@ card.innerHTML=`
 月商予測: ${idea.revenue.monthly}
 </div>
 <hr>
-
-<b>AI評価</b><br>
-市場性: ${idea.score?.market ?? "-"}<br>
-収益性: ${idea.score?.profit ?? "-"}<br>
-実現性: ${idea.score?.feasibility ?? "-"}<br>
-
-<br>
-
-<b>市場分析</b><br>
-市場規模: ${idea.market?.size ?? "-"}<br>
-成長性: ${idea.market?.growth ?? "-"}<br>
-ターゲット: ${idea.market?.target ?? "-"}<br>
-
-<br>
-
-<b>競合分析</b><br>
-競合: ${(idea.competition?.competitors || []).join(", ")}<br>
-差別化: ${idea.competition?.gap ?? "-"}<br>
-
-<br>
-
-<b>収益モデル</b><br>
-モデル: ${idea.revenue?.model ?? "-"}<br>
-価格: ${idea.revenue?.price ?? "-"}<br>
-月商予測: ${idea.revenue?.monthly ?? "-"}<br>
 
 `
 
