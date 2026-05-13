@@ -387,6 +387,31 @@ card.innerHTML=`
 
 <p>${idea.description}</p>
 
+<div class="score-grid">
+<span class="score-badge">市場性 ${idea.score.market}</span>
+<span class="score-badge">収益性 ${idea.score.profit}</span>
+<span class="score-badge">実現性 ${idea.score.feasibility}</span>
+</div>
+
+<div class="section-title">市場分析</div>
+<div class="section-box">
+市場規模: ${idea.market.size}<br>
+成長性: ${idea.market.growth}<br>
+ターゲット: ${idea.market.target}
+</div>
+
+<div class="section-title">競合分析</div>
+<div class="section-box">
+競合: ${idea.competition.competitors?.join(", ")}<br>
+差別化: ${idea.competition.gap}
+</div>
+
+<div class="section-title">収益モデル</div>
+<div class="revenue-box">
+モデル: ${idea.revenue.model}<br>
+価格: ${idea.revenue.price}<br>
+月商予測: ${idea.revenue.monthly}
+</div>
 <hr>
 
 <b>AI評価</b><br>
