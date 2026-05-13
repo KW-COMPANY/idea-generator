@@ -38,3 +38,8 @@ border:2px solid #ddd;
 text-align:center;
 font-size:1em;
 }
+.idea-card h3{
+font-size:1.5em;
+margin-bottom:10px;
+color:#333;
+}
