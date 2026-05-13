@@ -9,3 +9,32 @@
     max-height: 500px;
     opacity: 1;
 }
+/* ========================
+生成数 UI
+======================== */
+
+.settings-box{
+background:white;
+padding:15px 20px;
+border-radius:12px;
+display:inline-flex;
+align-items:center;
+gap:12px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+margin-bottom:20px;
+}
+
+.settings-label{
+font-weight:600;
+font-size:0.95em;
+color:#555;
+}
+
+.settings-input{
+width:60px;
+padding:6px 8px;
+border-radius:8px;
+border:2px solid #ddd;
+text-align:center;
+font-size:1em;
+}
