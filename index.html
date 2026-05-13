@@ -420,9 +420,9 @@ ${idea.description}
 
 <div class="section-title">市場分析</div>
 <div class="section-box">
-市場規模: ${idea.market.size}<br>
-成長性: ${idea.market.growth}<br>
-ターゲット: ${idea.market.target}
+市場規模: ${idea.market?.size ?? "-"}<br>
+成長性: ${idea.market?.growth ?? "-"}<br>
+ターゲット: ${idea.market?.target ?? "-"}
 </div>
 
 <div class="section-title">競合分析</div>
