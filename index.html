@@ -465,6 +465,18 @@ ${idea.description}
 価格: ${idea.revenue?.price ?? "-"}<br>
 月商予測: ${idea.revenue?.monthly ?? "-"}
 </div>
+<div class="settings-box">
+<label class="settings-label">用途</label>
+
+<select id="usecase" class="settings-input">
+<option value="B2C">個人向け</option>
+<option value="B2B">法人向け</option>
+<option value="B2Edu">教育向け</option>
+<option value="Creator">クリエイター向け</option>
+<option value="SMB">小規模事業者向け</option>
+<option value="B2Gov">行政・公共</option>
+</select>
+</div>
 <hr>
 
 <button class="copy-btn" onclick="copyIdea(${i})">
