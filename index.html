@@ -427,8 +427,8 @@ ${idea.description}
 
 <div class="section-title">競合分析</div>
 <div class="section-box">
-競合: ${idea.competition.competitors?.join(", ")}<br>
-差別化: ${idea.competition.gap}
+競合: ${(idea.competition?.competitors || []).join(", ")}<br>
+差別化: ${idea.competition?.gap ?? "-"}
 </div>
 
 <div class="section-title">収益モデル</div>
