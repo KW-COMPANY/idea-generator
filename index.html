@@ -371,7 +371,8 @@ document.getElementById("errorMessage").classList.remove("active")
 const inputs=[...document.querySelectorAll(".input-field")]
 .map(i=>i.value.trim())
 .filter(v=>v!=="")
-
+const usecase = document.getElementById("usecase").value;
+  
 if(inputs.length<2){
 showError("少なくとも2つ入力してください");
 return;
