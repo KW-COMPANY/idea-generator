@@ -372,7 +372,11 @@ const inputs=[...document.querySelectorAll(".input-field")]
 .map(i=>i.value.trim())
 .filter(v=>v!=="")
 const usecase = document.getElementById("usecase").value;
-  
+body: JSON.stringify({
+  inputs: inputs,
+  count: count,
+  usecase: usecase   // ←追加
+})
 if(inputs.length<2){
 showError("少なくとも2つ入力してください");
 return;
