@@ -356,7 +356,8 @@ usecase:usecase
 })
 
 if(!res.ok){
-throw new Error("APIエラー")
+const text = await res.text()
+throw new Error("APIエラー: " + text)
 }
 
 const data=await res.json()
