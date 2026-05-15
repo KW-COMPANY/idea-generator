@@ -331,6 +331,7 @@ const ideas=await callAPI(inputs,count,usecase)
 
 if(!ideas || ideas.length===0){
 showError("アイデア生成に失敗しました。もう一度試してください。")
+document.getElementById("loading").classList.remove("active")
 return
 }
 
