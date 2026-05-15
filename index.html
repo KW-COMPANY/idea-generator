@@ -338,9 +338,8 @@ return
 displayIdeas(ideas)
 
 }catch(e){
-
-showError(e.message)
-
+console.error(e)
+showError("API通信エラー")
 }
 
 document.getElementById("loading").classList.remove("active")
