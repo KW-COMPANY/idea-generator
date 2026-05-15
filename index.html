@@ -425,7 +425,20 @@ const el=document.getElementById("errorMessage")
 el.textContent=msg
 el.classList.add("active")
 }
+function copyIdea(index){
 
+const cards=document.querySelectorAll(".idea-card")
+const text=cards[index].innerText
+
+navigator.clipboard.writeText(text)
+.then(()=>{
+alert("コピーしました")
+})
+.catch(()=>{
+alert("コピー失敗")
+})
+
+}
 </script>
 
 </body>
