@@ -14,7 +14,7 @@ gtag('config', 'G-VDPER87RQ8');
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>複数の要素を組み合わせて革新的なアイデアを生成してくれるAIツール｜アイデア組み合わせジェネレーター</title>
+<title>アイデア組み合わせジェネレーター</title>
 
 <style>
 
@@ -50,12 +50,6 @@ margin-bottom:10px;
 
 .subtitle{
 color:rgba(255,255,255,0.9);
-font-size:1.1em;
-}
-
-.main-card{
-background:transparent;
-padding:0;
 }
 
 .input-grid{
@@ -137,14 +131,6 @@ margin:0 auto 20px;
 100%{transform:rotate(360deg)}
 }
 
-.results-section{
-display:none;
-}
-
-.results-section.active{
-display:block;
-}
-
 .idea-card{
 background:white;
 border-radius:18px;
@@ -153,52 +139,12 @@ margin-bottom:24px;
 box-shadow:0 10px 30px rgba(0,0,0,0.1);
 border-top:6px solid #f5576c;
 }
-<div class="section-title">用途</div>
-<div class="section-box">
-${usecase}
-</div>
-.error-message{
-background:#ffebee;
-color:#c62828;
-padding:15px;
-border-radius:10px;
-margin-top:20px;
-display:none;
-}
-
-.error-message.active{
-display:block;
-}
-/* ========================
-AIスコア
-======================== */
-
-.score-grid{
-display:flex;
-gap:10px;
-margin-top:10px;
-margin-bottom:10px;
-flex-wrap:wrap;
-}
-
-.score-badge{
-background:#eef1ff;
-padding:6px 12px;
-border-radius:20px;
-font-size:0.9em;
-font-weight:600;
-color:#4a54e1;
-}
-/* ========================
-分析セクション
-======================== */
 
 .section-title{
 font-size:1.05em;
 font-weight:700;
 margin-top:16px;
 margin-bottom:6px;
-color:#444;
 }
 
 .section-box{
@@ -206,11 +152,7 @@ background:#fafafa;
 padding:12px 14px;
 border-radius:10px;
 margin-bottom:8px;
-font-size:0.95em;
 }
-/* ========================
-収益モデル
-======================== */
 
 .revenue-box{
 background:linear-gradient(135deg,#fff0f4,#ffe6ef);
@@ -218,9 +160,6 @@ padding:14px;
 border-radius:12px;
 margin-top:10px;
 }
-/* ========================
-生成数設定
-======================== */
 
 .settings-box{
 display:flex;
@@ -232,26 +171,26 @@ font-weight:600;
 }
 
 .settings-input{
-width:80px;
 padding:8px;
 border-radius:8px;
 border:none;
-font-size:1em;
-text-align:center;
-}
-  .idea-card h3{
-color:#333;
-font-weight:700;
 }
 
-.idea-card hr{
-border:none;
-border-top:1px solid #eee;
-margin-top:16px;
+.score-grid{
+display:flex;
+gap:10px;
+margin:10px 0;
+flex-wrap:wrap;
 }
-  /* ========================
-コピーボタン
-======================== */
+
+.score-badge{
+background:#eef1ff;
+padding:6px 12px;
+border-radius:20px;
+font-size:0.9em;
+font-weight:600;
+color:#4a54e1;
+}
 
 .copy-btn{
 background:#667eea;
@@ -264,9 +203,19 @@ font-size:0.9em;
 margin-top:12px;
 }
 
-.copy-btn:hover{
-opacity:0.9;
+.error-message{
+background:#ffebee;
+color:#c62828;
+padding:15px;
+border-radius:10px;
+margin-top:20px;
+display:none;
 }
+
+.error-message.active{
+display:block;
+}
+
 </style>
 </head>
 
@@ -278,10 +227,6 @@ opacity:0.9;
 <h1>🎨 アイデア組み合わせジェネレーター</h1>
 <p class="subtitle">複数の要素を組み合わせて革新的なアイデアを生み出そう！</p>
 </header>
-
-<div class="main-card">
-
-<div class="input-section">
 
 <div class="input-grid" id="inputGrid">
 
@@ -295,20 +240,25 @@ opacity:0.9;
 
 </div>
 
-<button class="add-btn" onclick="addInput()" id="addBtn">
-➕ 要素を追加（最大4個）
-</button>
-
-</div>
+<button class="add-btn" onclick="addInput()">➕ 要素追加</button>
 
 <div class="settings-box">
-<label class="settings-label">生成数</label>
+<label>生成数</label>
 <input type="number" id="ideaCount" min="3" max="5" value="3" class="settings-input">
+
+<label>用途</label>
+<select id="usecase" class="settings-input">
+<option value="B2C">個人向け</option>
+<option value="B2B">法人向け</option>
+<option value="Education">教育向け</option>
+<option value="Creator">クリエイター向け</option>
+<option value="SMB">小規模事業者</option>
+<option value="Government">行政</option>
+</select>
+
 </div>
 
-<button class="generate-btn" onclick="generateIdeas()" id="generateBtn">
-✨ アイデアを生成する
-</button>
+<button class="generate-btn" onclick="generateIdeas()">✨ アイデア生成</button>
 
 <div class="loading" id="loading">
 <div class="spinner"></div>
@@ -317,12 +267,8 @@ opacity:0.9;
 
 <div class="error-message" id="errorMessage"></div>
 
-<div class="results-section" id="resultsSection">
-<h2>💡 生成されたアイデア</h2>
 <div id="ideasContainer"></div>
-</div>
 
-</div>
 </div>
 
 <script>
@@ -356,44 +302,34 @@ grid.appendChild(div);
 
 function removeInput(btn){
 
-const inputs=document.querySelectorAll(".input-field");
-
-if(inputs.length<=2){
-alert("最低2つ必要です");
-return;
-}
-
 btn.parentElement.remove();
-
-inputCount=document.querySelectorAll(".input-field").length;
+inputCount--;
 
 }
 
 async function generateIdeas(){
+
 document.getElementById("errorMessage").classList.remove("active")
+
 const inputs=[...document.querySelectorAll(".input-field")]
 .map(i=>i.value.trim())
 .filter(v=>v!=="")
-const usecase = document.getElementById("usecase").value;
-body: JSON.stringify({
-  inputs: inputs,
-  count: count,
-  usecase: usecase   // ←追加
-})
+
 if(inputs.length<2){
-showError("少なくとも2つ入力してください");
-return;
+showError("2つ以上入力してください")
+return
 }
+
+const count=parseInt(document.getElementById("ideaCount").value)
+const usecase=document.getElementById("usecase").value
 
 document.getElementById("loading").classList.add("active")
 
 try{
 
-const ideaCount=parseInt(document.getElementById("ideaCount").value);
+const ideas=await callAPI(inputs,count,usecase)
 
-const ideas=await callAPI(inputs,ideaCount);
-
-displayIdeas(ideas);
+displayIdeas(ideas)
 
 }catch(e){
 
@@ -405,7 +341,7 @@ document.getElementById("loading").classList.remove("active")
 
 }
 
-async function callAPI(inputs,count){
+async function callAPI(inputs,count,usecase){
 
 const res=await fetch(WORKER_URL,{
 method:"POST",
@@ -413,9 +349,9 @@ headers:{
 "Content-Type":"application/json"
 },
 body:JSON.stringify({
-  inputs: inputs,
-  count: count,
-  usecase: usecase
+inputs:inputs,
+count:count,
+usecase:usecase
 })
 })
 
@@ -430,7 +366,7 @@ return data.ideas
 }
 
 function displayIdeas(ideas){
-window.generatedIdeas = ideas
+
 const container=document.getElementById("ideasContainer")
 container.innerHTML=""
 
@@ -441,19 +377,18 @@ card.className="idea-card"
 
 card.innerHTML=`
 
-<h3 style="font-size:1.3em;margin-bottom:6px;">
-${idea.title}
-</h3>
+<h3>${idea.title}</h3>
 
-<p style="color:#666;margin-bottom:12px;">
-${idea.description}
-</p>
+<p>${idea.description}</p>
 
 <div class="score-grid">
 <span class="score-badge">市場性 ${idea.score?.market ?? "-"}</span>
 <span class="score-badge">収益性 ${idea.score?.profit ?? "-"}</span>
 <span class="score-badge">実現性 ${idea.score?.feasibility ?? "-"}</span>
 </div>
+
+<div class="section-title">用途</div>
+<div class="section-box">${idea.usecase ?? "-"}</div>
 
 <div class="section-title">市場分析</div>
 <div class="section-box">
@@ -474,30 +409,14 @@ ${idea.description}
 価格: ${idea.revenue?.price ?? "-"}<br>
 月商予測: ${idea.revenue?.monthly ?? "-"}
 </div>
-<div class="settings-box">
-<label class="settings-label">用途</label>
 
-<select id="usecase" class="settings-input">
-<option value="B2C">個人向け</option>
-<option value="B2B">法人向け</option>
-<option value="B2Edu">教育向け</option>
-<option value="Creator">クリエイター向け</option>
-<option value="SMB">小規模事業者向け</option>
-<option value="B2Gov">行政・公共</option>
-</select>
-</div>
-<hr>
-
-<button class="copy-btn" onclick="copyIdea(${i})">
-アイデアをコピー
-</button>
+<button class="copy-btn" onclick="copyIdea(${i})">コピー</button>
 
 `
+
 container.appendChild(card)
 
 })
-
-document.getElementById("resultsSection").classList.add("active")
 
 }
 
@@ -506,25 +425,7 @@ const el=document.getElementById("errorMessage")
 el.textContent=msg
 el.classList.add("active")
 }
-function copyIdea(index){
 
-const idea = window.generatedIdeas[index]
-
-const text = `
-${idea.title}
-
-${idea.description}
-
-市場性: ${idea.score?.market ?? "-"}
-収益性: ${idea.score?.profit ?? "-"}
-実現性: ${idea.score?.feasibility ?? "-"}
-`
-
-navigator.clipboard.writeText(text)
-
-alert("アイデアをコピーしました")
-
-}
 </script>
 
 </body>
