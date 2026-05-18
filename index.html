@@ -477,9 +477,11 @@ navigator.clipboard.writeText(text)
 .then(()=>{
 
 btn.disabled = true
+btn.innerText="コピー済み ✓"
 btn.style.background="#4caf50"
 
 setTimeout(()=>{
+btn.disabled = false
 btn.innerText="コピー"
 btn.style.background="#667eea"
 },2000)
