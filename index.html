@@ -476,7 +476,7 @@ ${revenue}
 navigator.clipboard.writeText(text)
 .then(()=>{
 
-btn.innerText="コピー済み ✓"
+btn.disabled = true
 btn.style.background="#4caf50"
 
 setTimeout(()=>{
