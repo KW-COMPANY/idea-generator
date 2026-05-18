@@ -351,6 +351,26 @@ inputCount--;
 
 async function generateIdeas(){
 
+const timer = startProgress()
+
+try{
+
+const res = await fetch(API_ENDPOINT,{
+method:"POST",
+body:JSON.stringify({action:"generate"})
+})
+
+const data = await res.json()
+
+displayIdeas(data)
+
+}catch(e){
+alert("エラーが発生しました")
+}
+
+stopProgress(timer)
+
+}
 document.getElementById("errorMessage").classList.remove("active")
 
 const inputs=[...document.querySelectorAll(".input-field")]
