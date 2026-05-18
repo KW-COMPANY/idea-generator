@@ -499,6 +499,10 @@ function showError(msg){
 const el=document.getElementById("errorMessage")
 el.textContent=msg
 el.classList.add("active")
+
+setTimeout(()=>{
+el.classList.remove("active")
+},3000)
 }
 
 function copyIdea(index, btn){
