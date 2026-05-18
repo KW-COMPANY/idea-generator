@@ -394,17 +394,17 @@ card.innerHTML=`
 </div>
 
 <div class="section-title">用途</div>
-<div class="section-box">${idea.usecase ?? "-"}向けサービス</div>
+<div class="section-box" data-type="usecase">${idea.usecase ?? "-"}向けサービス</div>
 
 <div class="section-title">市場分析</div>
-<div class="section-box">
+<div class="section-box" data-type="market">
 市場規模: ${idea.market?.size ?? "-"}<br>
 成長性: ${idea.market?.growth ?? "-"}<br>
 ターゲット: ${idea.market?.target ?? "-"}
 </div>
 
 <div class="section-title">競合分析</div>
-<div class="section-box">
+<div class="section-box" data-type="competition">
 競合: ${(idea.competition?.competitors?.length
 ? idea.competition.competitors.join(", ")
 : "競合調査中")}<br>
