@@ -433,22 +433,23 @@ const el=document.getElementById("errorMessage")
 el.textContent=msg
 el.classList.add("active")
 }
+
 function copyIdea(index, btn){
 
 const card = document.querySelectorAll(".idea-card")[index]
 
-const title = card.querySelector("h3").innerText
-const desc = card.querySelector(".idea-desc").innerText
+const title = card.querySelector("h3").textContent
+const desc = card.querySelector(".idea-desc").textContent
 
 const scores = [...card.querySelectorAll(".score-badge")]
-.map(s => s.innerText)
+.map(s => s.textContent)
 .join(" / ")
 
-const usecase = card.querySelector('[data-type="usecase"]')?.innerText || "-"
-const market = card.querySelector('[data-type="market"]')?.innerText || "-"
-const competition = card.querySelector('[data-type="competition"]')?.innerText || "-"
+const usecase = card.querySelector('[data-type="usecase"]')?.textContent || "-"
+const market = card.querySelector('[data-type="market"]')?.textContent || "-"
+const competition = card.querySelector('[data-type="competition"]')?.textContent || "-"
 
-const revenue = card.querySelector(".revenue-box")?.innerText || "-"
+const revenue = card.querySelector(".revenue-box")?.textContent || "-"
 
 const text = `
 【アイデア】
@@ -477,21 +478,22 @@ navigator.clipboard.writeText(text)
 .then(()=>{
 
 btn.disabled = true
-btn.innerText="コピー済み ✓"
+btn.textContent="コピー済み ✓"
 btn.style.background="#4caf50"
 
 setTimeout(()=>{
 btn.disabled = false
-btn.innerText="コピー"
+btn.textContent="コピー"
 btn.style.background="#667eea"
 },2000)
 
 })
 .catch(()=>{
-btn.innerText="失敗"
+btn.textContent="失敗"
 })
 
 }
+
 </script>
 </body>
 </html>
