@@ -435,19 +435,32 @@ el.classList.add("active")
 }
 function copyIdea(index){
 
-const cards=document.querySelectorAll(".idea-card")[index]
+const card = document.querySelectorAll(".idea-card")[index]
 
-const title=cards.querySelector("h3").innerText
-const desc=cards.querySelector(".idea-desc").innerText
-const scores=cards.querySelectorAll(".score-badge")
-const scoreText=[...scores].map(s=>s.innerText).join(" / ")
-  
-const text=`
+const title = card.querySelector("h3").innerText
+const desc = card.querySelector(".idea-desc").innerText
+
+const scores = [...card.querySelectorAll(".score-badge")]
+.map(s => s.innerText)
+.join(" / ")
+
+const sections = card.querySelectorAll(".section-box")
+
+const usecase = sections[0]?.innerText || "-"
+const market = sections[1]?.innerText || "-"
+const competition = sections[2]?.innerText || "-"
+
+const revenue = card.querySelector(".revenue-box")?.innerText || "-"
+
+const text = `
 【アイデア】
 ${title}
 
 【説明】
 ${desc}
+
+【スコア】
+${scores}
 
 【用途】
 ${usecase}
