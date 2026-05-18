@@ -379,7 +379,10 @@ async function generateIdeas(){
 const timer=startProgress()
 
 document.getElementById("errorMessage").classList.remove("active")
-
+function removeInput(btn){
+  btn.parentElement.remove();
+  updateInputCount();
+}
 const inputs=[...document.querySelectorAll(".input-field")]
 .map(i=>i.value.trim())
 .filter(v=>v!=="")
