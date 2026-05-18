@@ -501,11 +501,24 @@ el.textContent=msg
 el.classList.add("active")
 }
 
-function copyIdea(index,btn){
+function copyIdea(index, btn){
 
-const card=document.querySelectorAll(".idea-card")[index]
+const card = document.querySelectorAll(".idea-card")[index]
 
-const text=`
+const title = card.querySelector("h3").innerText
+const desc = card.querySelector(".idea-desc").innerText
+
+const scores = [...card.querySelectorAll(".score-badge")]
+.map(s => s.innerText)
+.join(" / ")
+
+const usecase = card.querySelector('[data-type="usecase"]')?.innerText || "-"
+const market = card.querySelector('[data-type="market"]')?.innerText || "-"
+const competition = card.querySelector('[data-type="competition"]')?.innerText || "-"
+
+const revenue = card.querySelector(".revenue-box")?.innerText || "-"
+
+const text = `
 【アイデア】
 ${title}
 
@@ -529,14 +542,20 @@ ${revenue}
 `
 
 navigator.clipboard.writeText(text)
+.then(()=>{
 
-btn.textContent="コピー済み ✓"
+btn.innerText="コピー済み ✓"
 btn.style.background="#4caf50"
 
 setTimeout(()=>{
-btn.textContent="コピー"
+btn.innerText="コピー"
 btn.style.background="#667eea"
 },2000)
+
+})
+.catch(()=>{
+btn.innerText="失敗"
+})
 
 }
 
