@@ -415,7 +415,23 @@ stopProgress(timer)
 stopProgress(timer)
 
 }
+let isStopped = false;
 
+function stopProgress(timer){
+  if(isStopped) return;
+  isStopped = true;
+
+  clearInterval(timer);
+
+  const bar = document.getElementById("progressBar");
+  bar.style.width = "100%";
+
+  setTimeout(()=>{
+    document.getElementById("loadingArea").style.display = "none";
+    bar.style.width = "0%";
+    isStopped = false;
+  },600);
+}
 async function callAPI(inputs,count,usecase){
 
 const res=await fetch(WORKER_URL,{
