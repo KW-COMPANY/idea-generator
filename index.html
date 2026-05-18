@@ -370,9 +370,8 @@ grid.appendChild(div);
 
 function removeInput(btn){
 
-btn.parentElement.remove();
-inputCount--;
-
+function updateInputCount(){
+  inputCount = document.querySelectorAll(".input-field").length;
 }
 
 async function generateIdeas(){
