@@ -43,3 +43,7 @@ font-size:1.5em;
 margin-bottom:10px;
 color:#333;
 }
+.copy-btn:disabled{
+opacity:0.8;
+cursor:default;
+}
