@@ -476,8 +476,12 @@ ${revenue}
 `
 
 navigator.clipboard.writeText(text)
-
+.then(()=>{
 alert("コピーしました")
+})
+.catch(()=>{
+alert("コピーに失敗しました")
+})
 
 }
 </script>
