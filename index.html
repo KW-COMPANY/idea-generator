@@ -444,11 +444,9 @@ const scores = [...card.querySelectorAll(".score-badge")]
 .map(s => s.innerText)
 .join(" / ")
 
-const sections = card.querySelectorAll(".section-box")
-
-const usecase = sections[0]?.innerText || "-"
-const market = sections[1]?.innerText || "-"
-const competition = sections[2]?.innerText || "-"
+const usecase = card.querySelector('[data-type="usecase"]')?.innerText || "-"
+const market = card.querySelector('[data-type="market"]')?.innerText || "-"
+const competition = card.querySelector('[data-type="competition"]')?.innerText || "-"
 
 const revenue = card.querySelector(".revenue-box")?.innerText || "-"
 
