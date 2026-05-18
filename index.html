@@ -409,6 +409,7 @@ displayIdeas(ideas)
 }catch(e){
 console.error(e)
 showError("API通信エラー")
+stopProgress(timer)
 }
 
 stopProgress(timer)
