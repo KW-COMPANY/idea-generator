@@ -413,10 +413,16 @@ console.error(e)
 showError("API通信エラー")
 stopProgress(timer)
 }
+catch(e){
+  console.error(e)
 
-stopProgress(timer)
+  const msg = e?.message?.includes("API")
+    ? "サーバーエラーが発生しました"
+    : "通信に失敗しました（ネット環境を確認してください）"
 
+  showError(msg)
 }
+
 let isStopped = false;
 
 function stopProgress(timer){
