@@ -389,10 +389,50 @@ displayIdeas(data)
 alert("エラーが発生しました")
 }
 
+async function generateIdeas(){
+
+const timer = startProgress()
+
+document.getElementById("errorMessage").classList.remove("active")
+
+const inputs=[...document.querySelectorAll(".input-field")]
+.map(i=>i.value.trim())
+.filter(v=>v!=="")
+
+if(inputs.length<2){
+showError("2つ以上入力してください")
+stopProgress(timer)
+return
+}
+
+const count=parseInt(document.getElementById("ideaCount").value)
+const usecase=document.getElementById("usecase").value
+
+document.getElementById("loading").classList.add("active")
+
+try{
+
+const ideas=await callAPI(inputs,count,usecase)
+
+if(!ideas || ideas.length===0){
+showError("アイデア生成に失敗しました。もう一度試してください。")
+document.getElementById("loading").classList.remove("active")
+stopProgress(timer)
+return
+}
+
+displayIdeas(ideas)
+
+}catch(e){
+console.error(e)
+showError("API通信エラー")
+}
+
+document.getElementById("loading").classList.remove("active")
+
 stopProgress(timer)
 
 }
-document.getElementById("errorMessage").classList.remove("active")
 
 const inputs=[...document.querySelectorAll(".input-field")]
 .map(i=>i.value.trim())
