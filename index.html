@@ -439,7 +439,9 @@ const cards=document.querySelectorAll(".idea-card")[index]
 
 const title=cards.querySelector("h3").innerText
 const desc=cards.querySelector(".idea-desc").innerText
-
+const scores=cards.querySelectorAll(".score-badge")
+const scoreText=[...scores].map(s=>s.innerText).join(" / ")
+  
 const text=`
 【アイデア】
 ${title}
