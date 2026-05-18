@@ -433,7 +433,7 @@ const el=document.getElementById("errorMessage")
 el.textContent=msg
 el.classList.add("active")
 }
-function copyIdea(index){
+function copyIdea(index, btn){
 
 const card = document.querySelectorAll(".idea-card")[index]
 
@@ -475,10 +475,18 @@ ${revenue}
 
 navigator.clipboard.writeText(text)
 .then(()=>{
-alert("コピーしました")
+
+btn.innerText="コピー済み ✓"
+btn.style.background="#4caf50"
+
+setTimeout(()=>{
+btn.innerText="コピー"
+btn.style.background="#667eea"
+},2000)
+
 })
 .catch(()=>{
-alert("コピーに失敗しました")
+btn.innerText="失敗"
 })
 
 }
