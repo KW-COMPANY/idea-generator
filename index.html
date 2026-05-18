@@ -279,7 +279,44 @@ display:block;
 <script>
 
 const WORKER_URL="https://idea-generator-api.gmo-k-watanabe.workers.dev";
+function startProgress(){
 
+const bar = document.getElementById("progressBar")
+const area = document.getElementById("loadingArea")
+
+area.style.display = "block"
+
+let progress = 0
+
+const timer = setInterval(()=>{
+
+progress += Math.random()*10
+
+if(progress >= 90){
+progress = 90
+}
+
+bar.style.width = progress + "%"
+
+},500)
+
+return timer
+}
+
+function stopProgress(timer){
+
+clearInterval(timer)
+
+const bar = document.getElementById("progressBar")
+
+bar.style.width = "100%"
+
+setTimeout(()=>{
+document.getElementById("loadingArea").style.display="none"
+bar.style.width="0%"
+},500)
+
+}
 let inputCount=2;
 
 function addInput(){
