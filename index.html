@@ -295,6 +295,17 @@ area.style.display = "block"
 
 let progress = 0
 
+function startProgress(){
+
+const bar = document.getElementById("progressBar")
+const area = document.getElementById("loadingArea")
+const text = document.getElementById("progressText")
+
+let step = 0
+let progress = 0
+
+area.style.display = "block"
+
 const timer = setInterval(()=>{
 
 progress += Math.random()*10
@@ -311,15 +322,9 @@ step++
 }
 
 },1500)
-progress += Math.random()*10
 
-if(progress >= 90){
-progress = 90
+return timer
 }
-
-bar.style.width = progress + "%"
-
-},500)
 
 return timer
 }
