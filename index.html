@@ -507,10 +507,25 @@ const card=document.querySelectorAll(".idea-card")[index]
 
 const text=`
 【アイデア】
-${card.querySelector("h3").textContent}
+${title}
 
 【説明】
-${card.querySelector(".idea-desc").textContent}
+${desc}
+
+【スコア】
+${scores}
+
+【用途】
+${usecase}
+
+【市場分析】
+${market}
+
+【競合分析】
+${competition}
+
+【収益モデル】
+${revenue}
 `
 
 navigator.clipboard.writeText(text)
