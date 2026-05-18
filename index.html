@@ -18,11 +18,7 @@ gtag('config', 'G-VDPER87RQ8');
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
 font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
@@ -32,25 +28,13 @@ padding:20px;
 color:#333;
 }
 
-.container{
-max-width:1200px;
-margin:0 auto;
-}
+.container{max-width:1200px;margin:0 auto;}
 
-header{
-text-align:center;
-margin-bottom:40px;
-}
+header{text-align:center;margin-bottom:40px;}
 
-h1{
-color:white;
-font-size:2.5em;
-margin-bottom:10px;
-}
+h1{color:white;font-size:2.5em;margin-bottom:10px;}
 
-.subtitle{
-color:rgba(255,255,255,0.9);
-}
+.subtitle{color:rgba(255,255,255,0.9);}
 
 .input-grid{
 display:grid;
@@ -59,9 +43,7 @@ gap:15px;
 margin-bottom:20px;
 }
 
-.input-wrapper{
-position:relative;
-}
+.input-wrapper{position:relative;}
 
 .input-field{
 width:100%;
@@ -106,29 +88,39 @@ margin-bottom:20px;
 cursor:pointer;
 }
 
-.loading{
-display:none;
-text-align:center;
-padding:40px;
+.settings-box{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:20px;
+color:white;
+font-weight:600;
 }
 
-.loading.active{
-display:block;
+.settings-input{
+padding:8px;
+border-radius:8px;
+border:none;
 }
 
-.spinner{
-border:4px solid #f3f3f3;
-border-top:4px solid #667eea;
-border-radius:50%;
-width:50px;
-height:50px;
-animation:spin 1s linear infinite;
-margin:0 auto 20px;
+.progress-wrap{
+width:100%;
+height:10px;
+background:#ddd;
+border-radius:20px;
+overflow:hidden;
 }
 
-@keyframes spin{
-0%{transform:rotate(0deg)}
-100%{transform:rotate(360deg)}
+#progressBar{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+transition:width 0.4s;
+}
+
+#progressText{
+color:white;
+margin-top:8px;
 }
 
 .idea-card{
@@ -161,21 +153,6 @@ border-radius:12px;
 margin-top:10px;
 }
 
-.settings-box{
-display:flex;
-align-items:center;
-gap:10px;
-margin-bottom:20px;
-color:white;
-font-weight:600;
-}
-
-.settings-input{
-padding:8px;
-border-radius:8px;
-border:none;
-}
-
 .score-grid{
 display:flex;
 gap:10px;
@@ -199,7 +176,6 @@ border:none;
 padding:8px 14px;
 border-radius:8px;
 cursor:pointer;
-font-size:0.9em;
 margin-top:12px;
 }
 
@@ -212,9 +188,7 @@ margin-top:20px;
 display:none;
 }
 
-.error-message.active{
-display:block;
-}
+.error-message.active{display:block;}
 
 </style>
 </head>
@@ -243,6 +217,7 @@ display:block;
 <button class="add-btn" onclick="addInput()">➕ 要素追加</button>
 
 <div class="settings-box">
+
 <label>生成数</label>
 <input type="number" id="ideaCount" min="3" max="5" value="3" class="settings-input">
 
@@ -260,16 +235,13 @@ display:block;
 
 <button class="generate-btn" onclick="generateIdeas()">✨ アイデア生成</button>
 
-<div class="loading" id="loading">
-<div class="spinner"></div>
-<p>AIがアイデアを考え中...</p>
-</div>
 <div id="loadingArea" style="display:none;margin-top:20px;">
-  <div class="progress-wrap">
-    <div id="progressBar"></div>
-  </div>
-  <div id="progressText">AIがアイデアを考えています...</div>
+<div class="progress-wrap">
+<div id="progressBar"></div>
 </div>
+<div id="progressText">AIがアイデアを考えています...</div>
+</div>
+
 <div class="error-message" id="errorMessage"></div>
 
 <div id="ideasContainer"></div>
@@ -279,63 +251,51 @@ display:block;
 <script>
 
 const WORKER_URL="https://idea-generator-api.gmo-k-watanabe.workers.dev";
-const messages = [
+
+const messages=[
 "AIが市場を調査しています...",
 "競合を分析しています...",
 "ビジネスモデルを設計しています...",
 "収益性を計算しています..."
 ]
-function startProgress(){
-
-const bar = document.getElementById("progressBar")
-const area = document.getElementById("loadingArea")
-const text = document.getElementById("progressText")
-let step = 0
-area.style.display = "block"
-
-let progress = 0
 
 function startProgress(){
 
-const bar = document.getElementById("progressBar")
-const area = document.getElementById("loadingArea")
-const text = document.getElementById("progressText")
+const bar=document.getElementById("progressBar")
+const area=document.getElementById("loadingArea")
+const text=document.getElementById("progressText")
 
-let step = 0
-let progress = 0
+area.style.display="block"
 
-area.style.display = "block"
+let progress=0
+let step=0
 
-const timer = setInterval(()=>{
+const timer=setInterval(()=>{
 
-progress += Math.random()*10
+progress+=Math.random()*10
 
-if(progress >= 90){
-progress = 90
-}
+if(progress>90){progress=90}
 
-bar.style.width = progress + "%"
+bar.style.width=progress+"%"
 
-if(step < messages.length){
-text.textContent = messages[step]
+if(step<messages.length){
+text.textContent=messages[step]
 step++
 }
 
-},1500)
+},1200)
 
 return timer
-}
 
-return timer
 }
 
 function stopProgress(timer){
 
 clearInterval(timer)
 
-const bar = document.getElementById("progressBar")
+const bar=document.getElementById("progressBar")
 
-bar.style.width = "100%"
+bar.style.width="100%"
 
 setTimeout(()=>{
 document.getElementById("loadingArea").style.display="none"
@@ -343,41 +303,42 @@ bar.style.width="0%"
 },500)
 
 }
-let inputCount=2;
+
+let inputCount=2
 
 function addInput(){
 
 if(inputCount>=4){
-alert("最大4個までです");
-return;
+alert("最大4個までです")
+return
 }
 
-inputCount++;
+inputCount++
 
-const grid=document.getElementById("inputGrid");
+const grid=document.getElementById("inputGrid")
 
-const div=document.createElement("div");
-div.className="input-wrapper";
+const div=document.createElement("div")
+div.className="input-wrapper"
 
 div.innerHTML=`
 <input type="text" class="input-field" placeholder="要素${inputCount}">
 <button class="remove-btn" onclick="removeInput(this)">×</button>
-`;
+`
 
-grid.appendChild(div);
+grid.appendChild(div)
 
 }
 
 function removeInput(btn){
 
-btn.parentElement.remove();
-inputCount--;
+btn.parentElement.remove()
+inputCount--
 
 }
 
 async function generateIdeas(){
 
-const timer = startProgress()
+const timer=startProgress()
 
 document.getElementById("errorMessage").classList.remove("active")
 
@@ -394,64 +355,20 @@ return
 const count=parseInt(document.getElementById("ideaCount").value)
 const usecase=document.getElementById("usecase").value
 
-document.getElementById("loading").classList.add("active")
-
 try{
 
 const ideas=await callAPI(inputs,count,usecase)
 
-if(!ideas || ideas.length===0){
-showError("アイデア生成に失敗しました。もう一度試してください。")
-document.getElementById("loading").classList.remove("active")
-stopProgress(timer)
-return
-}
-
 displayIdeas(ideas)
 
 }catch(e){
+
 console.error(e)
 showError("API通信エラー")
-}
 
-document.getElementById("loading").classList.remove("active")
+}
 
 stopProgress(timer)
-
-}
-
-const inputs=[...document.querySelectorAll(".input-field")]
-.map(i=>i.value.trim())
-.filter(v=>v!=="")
-
-if(inputs.length<2){
-showError("2つ以上入力してください")
-return
-}
-
-const count=parseInt(document.getElementById("ideaCount").value)
-const usecase=document.getElementById("usecase").value
-
-document.getElementById("loading").classList.add("active")
-
-try{
-
-const ideas=await callAPI(inputs,count,usecase)
-
-if(!ideas || ideas.length===0){
-showError("アイデア生成に失敗しました。もう一度試してください。")
-document.getElementById("loading").classList.remove("active")
-return
-}
-
-displayIdeas(ideas)
-
-}catch(e){
-console.error(e)
-showError("API通信エラー")
-}
-
-document.getElementById("loading").classList.remove("active")
 
 }
 
@@ -459,20 +376,13 @@ async function callAPI(inputs,count,usecase){
 
 const res=await fetch(WORKER_URL,{
 method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
+headers:{"Content-Type":"application/json"},
 body:JSON.stringify({
 inputs:inputs,
 count:count,
 usecase:usecase
 })
 })
-
-if(!res.ok){
-const text = await res.text()
-throw new Error("APIエラー: " + text)
-}
 
 const data=await res.json()
 
@@ -503,7 +413,7 @@ card.innerHTML=`
 </div>
 
 <div class="section-title">用途</div>
-<div class="section-box" data-type="usecase">${idea.usecase ?? "-"}向けサービス</div>
+<div class="section-box" data-type="usecase">${idea.usecase ?? "-"}</div>
 
 <div class="section-title">市場分析</div>
 <div class="section-box" data-type="market">
@@ -527,7 +437,7 @@ card.innerHTML=`
 月商予測: ${idea.revenue?.monthly ?? "-"}
 </div>
 
-<button class="copy-btn" onclick="copyIdea(${i}, this)">コピー</button>
+<button class="copy-btn" onclick="copyIdea(${i},this)">コピー</button>
 
 `
 
@@ -543,66 +453,23 @@ el.textContent=msg
 el.classList.add("active")
 }
 
-function copyIdea(index, btn){
+function copyIdea(index,btn){
 
-const card = document.querySelectorAll(".idea-card")[index]
+const card=document.querySelectorAll(".idea-card")[index]
 
-const title = card.querySelector("h3").textContent
-const desc = card.querySelector(".idea-desc").textContent
-
-const scores = [...card.querySelectorAll(".score-badge")]
-.map(s => s.textContent)
-.join(" / ")
-
-const usecase = card.querySelector('[data-type="usecase"]')?.textContent || "-"
-const market = card.querySelector('[data-type="market"]')?.textContent || "-"
-const competition = card.querySelector('[data-type="competition"]')?.textContent || "-"
-
-const revenue = card.querySelector(".revenue-box")?.textContent || "-"
-
-const text = `
-【アイデア】
-${title}
-
-【説明】
-${desc}
-
-【スコア】
-${scores}
-
-【用途】
-${usecase}
-
-【市場分析】
-${market}
-
-【競合分析】
-${competition}
-
-【収益モデル】
-${revenue}
-`
+const text=card.innerText
 
 navigator.clipboard.writeText(text)
-.then(()=>{
 
-btn.disabled = true
 btn.textContent="コピー済み ✓"
-btn.style.background="#4caf50"
 
 setTimeout(()=>{
-btn.disabled = false
 btn.textContent="コピー"
-btn.style.background="#667eea"
 },2000)
-
-})
-.catch(()=>{
-btn.textContent="失敗"
-})
 
 }
 
 </script>
+
 </body>
 </html>
