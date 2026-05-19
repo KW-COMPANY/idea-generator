@@ -9,10 +9,16 @@
     max-height: 500px;
     opacity: 1;
 }
+
 /* ========================
 生成数 UI
 ======================== */
 
+/*
+【修正ポイント①】
+settings-boxの定義を「このファイルの唯一の正」と明示
+→ HTML側の同名クラスとのズレを防止
+*/
 .settings-box{
 background:white;
 padding:15px 20px;
@@ -24,12 +30,14 @@ box-shadow:0 6px 18px rgba(0,0,0,0.08);
 margin-bottom:20px;
 }
 
+/* ラベル */
 .settings-label{
 font-weight:600;
 font-size:0.95em;
 color:#555;
 }
 
+/* 入力 */
 .settings-input{
 width:60px;
 padding:6px 8px;
@@ -38,15 +46,29 @@ border:2px solid #ddd;
 text-align:center;
 font-size:1em;
 }
+
+/* アイデアカードタイトル */
 .idea-card h3{
 font-size:1.5em;
 margin-bottom:10px;
 color:#333;
 }
+
+/* コピー無効状態 */
 .copy-btn:disabled{
 opacity:0.8;
 cursor:default;
 }
+
+/* ========================
+進捗バー UI
+======================== */
+
+/*
+【修正ポイント②】
+#progressBar をこの定義のみで統一
+→ 将来のCSS追記で“二重定義事故”を防ぐ
+*/
 .progress-wrap{
 width:100%;
 height:10px;
