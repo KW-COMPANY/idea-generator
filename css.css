@@ -194,15 +194,6 @@ margin:0 auto 20px;
 100%{transform:rotate(360deg)}
 }
 
-.progress-wrap{
-width:100%;
-height:10px;
-background:#eee;
-border-radius:10px;
-overflow:hidden;
-margin-bottom:10px;
-}
-
 #progressBar{
 width:0%;
 height:100%;
