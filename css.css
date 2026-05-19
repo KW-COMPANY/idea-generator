@@ -40,9 +40,8 @@ border:2px solid #ddd;
 font-size:1em;
 }
 
-/* 用途だけ広げる */
 #usecase{
-min-width:180px;
+min-width:130px;
 }
 
 /* アイデアカードタイトル */
