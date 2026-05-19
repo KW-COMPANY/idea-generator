@@ -40,15 +40,6 @@ border:2px solid #ddd;
 font-size:1.2em;
 }
 
-@media (max-width:600px){
-#ideaCount{
-width:70px;
-}
-#usecase{
-width:100px;
-}
-}
-
 /* アイデアカードタイトル */
 .idea-card h3{
 font-size:1.2em;
@@ -201,11 +192,6 @@ animation:spin 1s linear infinite;
 margin:0 auto 20px;
 }
 
-@keyframes spin{
-0%{transform:rotate(0deg)}
-100%{transform:rotate(360deg)}
-}
-
 .idea-card{
 background:white;
 border-radius:18px;
@@ -284,4 +270,18 @@ margin-bottom:10px;
 color:white;
 margin-left:20px;
 line-height:1.8;
+}
+
+@keyframes spin{
+0%{transform:rotate(0deg)}
+100%{transform:rotate(360deg)}
+}
+
+@media (max-width:600px){
+#ideaCount{
+width:70px;
+}
+#usecase{
+width:100px;
+}
 }
