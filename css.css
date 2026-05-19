@@ -14,11 +14,6 @@
 生成数 UI
 ======================== */
 
-/*
-【修正ポイント①】
-settings-boxの定義を「このファイルの唯一の正」と明示
-→ HTML側の同名クラスとのズレを防止
-*/
 .settings-box{
 background:white;
 padding:15px 20px;
