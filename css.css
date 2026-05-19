@@ -14,17 +14,6 @@
 生成数 UI
 ======================== */
 
-.settings-box{
-background:white;
-padding:15px 20px;
-border-radius:12px;
-display:inline-flex;
-align-items:center;
-gap:12px;
-box-shadow:0 6px 18px rgba(0,0,0,0.08);
-margin-bottom:20px;
-}
-
 /* ラベル */
 .settings-label{
 font-weight:400;
@@ -296,13 +285,6 @@ min-width:150px;
 
 @media (max-width:600px){
 
-.settings-box{
-flex-direction:column;
-align-items:flex-start;
-gap:10px;
-width:100%;
-}
-
 #ideaCount{
 width:90px;
 padding-right:20px;
@@ -315,8 +297,18 @@ max-width:260px;
 
 }
 .settings-box{
+background:white;
+padding:15px 20px;
+border-radius:12px;
+display:inline-flex;
+align-items:center;
+gap:12px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+margin-bottom:20px;
 flex-direction:column;
 align-items:center;
 gap:10px;
 width:100%;
+}
+
 }
