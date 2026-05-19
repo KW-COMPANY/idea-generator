@@ -34,12 +34,11 @@ color:#555;
 
 /* 入力 */
 .settings-input{
-width:60px;
 padding:6px 10px;
 border-radius:8px;
 border:2px solid #ddd;
-text-align:center;
 font-size:1em;
+min-width:150px;
 }
 
 /* アイデアカードタイトル */
