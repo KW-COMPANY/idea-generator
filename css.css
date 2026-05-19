@@ -28,7 +28,7 @@ margin-bottom:20px;
 /* ラベル */
 .settings-label{
 font-weight:600;
-font-size:1em;
+font-size:1.2em;
 color:#555;
 }
 
@@ -46,7 +46,7 @@ min-width:130px;
 
 /* アイデアカードタイトル */
 .idea-card h3{
-font-size:1.5em;
+font-size:1.2em;
 margin-bottom:10px;
 color:#333;
 }
