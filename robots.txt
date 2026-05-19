@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kw-company.github.io/idea-generator/sitemap.xml
