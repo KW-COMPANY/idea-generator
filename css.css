@@ -41,11 +41,12 @@ font-size:1.2em;
 }
 
 @media (max-width:600px){
-
-#usecase{
-min-width:110px;
+#ideaCount{
+width:70px;
 }
-
+#usecase{
+min-width:100px;
+}
 }
 
 /* アイデアカードタイトル */
@@ -283,7 +284,4 @@ margin-bottom:10px;
 color:white;
 margin-left:20px;
 line-height:1.8;
-}
-#ideaCount{
-width:70px;
 }
