@@ -98,7 +98,7 @@ h1{color:white;font-size:2.5em;margin-bottom:10px;}
 const WORKER_URL="https://idea-generator-api.gmo-k-watanabe.workers.dev";
 
 /* =====================
-Progress
+Progress（改善①：多重起動防止）
 ===================== */
 
 const messages=[
@@ -108,7 +108,13 @@ const messages=[
 "収益性を計算しています..."
 ];
 
+let progressTimer = null;
+let requestId = 0;
+
 function startProgress(){
+
+if(progressTimer) clearInterval(progressTimer);
+
 const bar=document.getElementById("progressBar");
 const area=document.getElementById("loadingArea");
 const text=document.getElementById("progressText");
@@ -118,7 +124,7 @@ let progress=0;
 
 area.style.display="block";
 
-const timer=setInterval(()=>{
+progressTimer = setInterval(()=>{
 progress+=Math.random()*10;
 if(progress>=90) progress=90;
 
@@ -130,14 +136,10 @@ step++;
 }
 },1200);
 
-return timer;
+return progressTimer;
 }
 
-let isStopped=false;
-
 function stopProgress(timer){
-if(isStopped) return;
-isStopped=true;
 
 clearInterval(timer);
 
@@ -147,23 +149,22 @@ bar.style.width="100%";
 setTimeout(()=>{
 document.getElementById("loadingArea").style.display="none";
 bar.style.width="0%";
-isStopped=false;
+progressTimer = null;
 },600);
 }
 
 /* =====================
-Input
+Input（改善②：DOM基準で管理）
 ===================== */
 
-let inputCount=2;
-
 function addInput(){
-if(inputCount>=4){
+
+const inputs = document.querySelectorAll(".input-field");
+
+if(inputs.length>=4){
 alert("最大4個までです");
 return;
 }
-
-inputCount++;
 
 const grid=document.getElementById("inputGrid");
 
@@ -171,7 +172,7 @@ const div=document.createElement("div");
 div.className="input-wrapper";
 
 div.innerHTML=`
-<input type="text" class="input-field" placeholder="要素${inputCount}">
+<input type="text" class="input-field" placeholder="要素${inputs.length+1}">
 <button class="remove-btn" onclick="removeInput(this)">×</button>
 `;
 
@@ -180,14 +181,15 @@ grid.appendChild(div);
 
 function removeInput(btn){
 btn.parentElement.remove();
-inputCount=document.querySelectorAll(".input-field").length;
 }
 
 /* =====================
-Main
+Main（改善③：リクエスト競合防止）
 ===================== */
 
 async function generateIdeas(){
+
+const myRequestId = ++requestId;
 
 const timer=startProgress();
 
@@ -210,6 +212,9 @@ try{
 
 const ideas=await callAPI(inputs,count,usecase);
 
+/* 古いレスポンス無効化 */
+if(myRequestId !== requestId) return;
+
 if(!ideas || ideas.length===0){
 showError("アイデア生成に失敗しました");
 stopProgress(timer);
@@ -227,16 +232,24 @@ stopProgress(timer);
 }
 
 /* =====================
-API
+API（改善④：タイムアウト追加）
 ===================== */
 
 async function callAPI(inputs,count,usecase){
 
+const controller = new AbortController();
+const timeout = setTimeout(()=>controller.abort(), 30000);
+
+try{
+
 const res=await fetch(WORKER_URL,{
 method:"POST",
 headers:{"Content-Type":"application/json"},
+signal: controller.signal,
 body:JSON.stringify({inputs,count,usecase})
 });
+
+clearTimeout(timeout);
 
 if(!res.ok){
 throw new Error(await res.text());
@@ -244,6 +257,11 @@ throw new Error(await res.text());
 
 const data=await res.json();
 return data.ideas;
+
+}catch(e){
+clearTimeout(timeout);
+throw e;
+}
 }
 
 /* =====================
