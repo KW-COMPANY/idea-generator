@@ -250,15 +250,6 @@ border-radius:12px;
 margin-top:10px;
 }
 
-.settings-box{
-display:flex;
-align-items:center;
-gap:10px;
-margin-bottom:20px;
-color:white;
-font-weight:600;
-}
-
 .settings-input{
 padding:8px;
 border-radius:8px;
