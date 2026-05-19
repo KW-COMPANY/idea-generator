@@ -194,13 +194,6 @@ margin:0 auto 20px;
 100%{transform:rotate(360deg)}
 }
 
-#progressBar{
-width:0%;
-height:100%;
-background:linear-gradient(90deg,#f093fb,#f5576c);
-transition:width .4s;
-}
-
 .idea-card{
 background:white;
 border-radius:18px;
