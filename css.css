@@ -272,3 +272,8 @@ display:block;
 .container p{
 color:white;
 }
+.howto{
+color:white;
+margin-left:20px;
+line-height:1.8;
+}
