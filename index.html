@@ -16,38 +16,16 @@ gtag('config', 'G-VDPER87RQ8');
 
 <title>アイデア組み合わせジェネレーター</title>
 
-<style>
-/* ===== CSSそのまま ===== */
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px;color:#333;}
-.container{max-width:1200px;margin:0 auto;}
-header{text-align:center;margin-bottom:40px;}
-h1{color:white;font-size:2.5em;margin-bottom:10px;}
-.subtitle{color:rgba(255,255,255,0.9);}
-.input-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-bottom:20px;}
-.input-wrapper{position:relative;}
-.input-field{width:100%;padding:15px 40px 15px 15px;border:3px solid #e0e0e0;border-radius:12px;font-size:1.1em;}
-.remove-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:#ff6b6b;color:white;border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;}
-.add-btn{background:linear-gradient(135deg,#56ab2f,#a8e063);color:white;border:none;padding:12px 30px;border-radius:25px;cursor:pointer;}
-.generate-btn{width:100%;background:linear-gradient(135deg,#f093fb,#f5576c);color:white;border:none;padding:20px;border-radius:15px;font-size:1.2em;margin-bottom:20px;cursor:pointer;}
-.loading{display:none;text-align:center;padding:40px;}
-.loading.active{display:block;}
-.spinner{border:4px solid #f3f3f3;border-top:4px solid #667eea;border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite;margin:0 auto 20px;}
-@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-.progress-wrap{width:100%;height:10px;background:#eee;border-radius:10px;overflow:hidden;margin-bottom:10px;}
-#progressBar{width:0%;height:100%;background:linear-gradient(90deg,#f093fb,#f5576c);transition:width .4s;}
-.idea-card{background:white;border-radius:18px;padding:28px;margin-bottom:24px;box-shadow:0 10px 30px rgba(0,0,0,0.1);border-top:6px solid #f5576c;}
-.section-title{font-size:1.05em;font-weight:700;margin-top:16px;margin-bottom:6px;}
-.section-box{background:#fafafa;padding:12px 14px;border-radius:10px;margin-bottom:8px;}
-.revenue-box{background:linear-gradient(135deg,#fff0f4,#ffe6ef);padding:14px;border-radius:12px;margin-top:10px;}
-.settings-box{display:flex;align-items:center;gap:10px;margin-bottom:20px;color:white;font-weight:600;}
-.settings-input{padding:8px;border-radius:8px;border:none;}
-.score-grid{display:flex;gap:10px;margin:10px 0;flex-wrap:wrap;}
-.score-badge{background:#eef1ff;padding:6px 12px;border-radius:20px;font-size:0.9em;font-weight:600;color:#4a54e1;}
-.copy-btn{background:#667eea;color:white;border:none;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:0.9em;margin-top:12px;}
-.error-message{background:#ffebee;color:#c62828;padding:15px;border-radius:10px;margin-top:20px;display:none;}
-.error-message.active{display:block;}
-</style>
+<meta name="description" content="複数の要素を組み合わせて新しいビジネスアイデアを生成する無料AIツール">
+
+<meta property="og:title" content="アイデア組み合わせジェネレーター">
+<meta property="og:description" content="要素を入力するだけでAIがビジネスアイデアを生成">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kw-company.github.io/idea-generator/">
+<meta property="og:image" content="https://kw-company.github.io/idea-generator/og.png">
+
+<link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
