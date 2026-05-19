@@ -270,3 +270,6 @@ display:none;
 .error-message.active{
 display:block;
 }
+.container p{
+color:white;
+}
