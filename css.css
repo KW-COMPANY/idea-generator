@@ -297,11 +297,13 @@ width:90px;
 padding-right:20px;
 }
 
-.settings-label:nth-of-type(2){
+/* 用途ラベル */
+#usecaseLabel{
 width:100%;
 margin-top:5px;
 }
 
+/* 用途セレクト */
 #usecase{
 width:100%;
 max-width:260px;
