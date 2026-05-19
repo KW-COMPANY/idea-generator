@@ -110,7 +110,11 @@ color:white;
 font-size:2.5em;
 margin-bottom:10px;
 }
-
+h2{
+color:white;
+font-size:2.5em;
+margin-bottom:10px;
+}
 .subtitle{
 color:rgba(255,255,255,0.9);
 }
