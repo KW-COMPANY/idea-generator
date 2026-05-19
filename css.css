@@ -38,7 +38,11 @@ padding:6px 10px;
 border-radius:8px;
 border:2px solid #ddd;
 font-size:1em;
-min-width:150px;
+}
+
+/* 用途だけ広げる */
+#usecase{
+min-width:180px;
 }
 
 /* アイデアカードタイトル */
