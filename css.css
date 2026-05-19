@@ -250,12 +250,6 @@ border-radius:12px;
 margin-top:10px;
 }
 
-.settings-input{
-padding:8px;
-border-radius:8px;
-border:none;
-}
-
 .score-grid{
 display:flex;
 gap:10px;
