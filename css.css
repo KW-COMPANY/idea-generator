@@ -40,8 +40,12 @@ border:2px solid #ddd;
 font-size:1.2em;
 }
 
+@media (max-width:600px){
+
 #usecase{
-min-width:130px;
+min-width:110px;
+}
+
 }
 
 /* アイデアカードタイトル */
