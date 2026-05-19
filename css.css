@@ -115,8 +115,8 @@ margin-bottom:10px;
 h2{
 color:white;
 font-size:1em;
-margin-top:20px;
-margin-bottom:20px;
+margin-top:5px;
+margin-bottom:10px;
 }
 .subtitle{
 color:rgba(255,255,255,0.9);
@@ -273,7 +273,7 @@ display:block;
 .container p{
 font-size:12px;
 color:white;
-margin-bottom:30px;
+margin-bottom:10px;
 }
 .howto{
 color:white;
