@@ -253,7 +253,7 @@ const inputs = [...document.querySelectorAll(".input-field")]
 .map(i => i.value.trim())
 .filter(v => v !== "")
 .filter(v => v.length >= 1)
-.filter(v => /^[ぁ-んァ-ヶ一-龯a-zA-Z0-9ー\s\-_/+.#,、。():：（）]+$/.test(v))
+.filter(v => /^[ぁ-んァ-ヶ一-龯a-zA-Z0-9ー\s\-_/+.#,、。():：（）&]+$/.test(v))
 .filter((v, i, arr) =>
   arr.findIndex(
     x =>
