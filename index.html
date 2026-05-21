@@ -276,7 +276,7 @@ return;
 
 console.error(e);
 
-if(e.name === "AbortError"){
+if(e?.name === "AbortError"){
 showError("タイムアウトしました");
 }else if(e?.message?.includes("API")){
 showError("サーバーエラー");
