@@ -270,7 +270,7 @@ displayIdeas(ideas);
 updateProgress(100, "完了しました");
 }catch(e){
 
-if(e.message === "VALIDATION_ERROR"){
+if(e?.message === "VALIDATION_ERROR"){
 return;
 }
 
