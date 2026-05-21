@@ -259,14 +259,11 @@ if(myRequestId !== requestId) return;
 
 if(!ideas || ideas.length===0){
 showError("アイデア生成に失敗しました");
-stopProgress();
 return;
 }
 
-displayIdeas(ideas);
-
 updateProgress(95, "表示を準備しています...");
-
+displayIdeas(ideas);
 }catch(e){
 
 console.error(e);
@@ -281,9 +278,13 @@ e?.message?.includes("API")
 
 finally{
 
+if(myRequestId === requestId){
+
 stopProgress();
 
 generateBtn.disabled = false;
+
+}
 
 }
 
