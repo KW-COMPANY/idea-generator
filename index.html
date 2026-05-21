@@ -385,7 +385,9 @@ ${escapeHTML(idea.usecase ?? "-")}向けサービス
 <div class="section-title">競合分析</div>
 <div class="section-box" data-type="competition">
 競合: ${escapeHTML(
-idea.competition?.competitors?.join(", ") || "競合調査中"
+Array.isArray(idea.competition?.competitors)
+? idea.competition.competitors.join(", ")
+: "競合調査中"
 )}<br>
 差別化: ${escapeHTML(idea.competition?.gap ?? "-")}
 </div>
@@ -405,7 +407,9 @@ const button = card.querySelector(".copy-btn");
 
 button.dataset.index = i;
 
-button.onclick = () => copyIdea(i, button);
+button.addEventListener("click", () => {
+copyIdea(i, button);
+});
 container.appendChild(card);
 
 });
