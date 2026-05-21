@@ -241,19 +241,16 @@ const inputs = [...document.querySelectorAll(".input-field")]
 
 updateProgress(15, "入力内容を確認しています...");
 
-if(inputs.length<2){
+const count=parseInt(document.getElementById("ideaCount").value);
+const usecase=document.getElementById("usecase").value;
 
+try{
+if(inputs.length<2){
 showError("2つ以上入力してください");
 
 throw new Error("VALIDATION_ERROR");
 
 }
-
-const count=parseInt(document.getElementById("ideaCount").value);
-const usecase=document.getElementById("usecase").value;
-
-try{
-
 updateProgress(30, "AIが市場分析しています...");
 
 const ideas=await callAPI(inputs,count,usecase);
