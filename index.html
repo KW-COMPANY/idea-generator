@@ -325,7 +325,9 @@ throw new Error(await res.text());
 
 const data=await res.json();
 
-return data.ideas;
+return Array.isArray(data.ideas)
+  ? data.ideas
+  : [];
 
 }catch(e){
 
