@@ -220,8 +220,11 @@ btn.parentElement.remove();
 
 async function generateIdeas(){
 
-const myRequestId = ++requestId;
 const generateBtn = document.querySelector(".generate-btn");
+
+if(generateBtn.disabled) return;
+
+const myRequestId = ++requestId;
 
 generateBtn.disabled = true;
 startProgress();
@@ -488,6 +491,8 @@ btn.style.background="#667eea";
 .catch(()=>{
 
 btn.textContent="失敗";
+
+alert("コピーに失敗しました");
 
 });
 
