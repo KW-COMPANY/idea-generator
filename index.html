@@ -75,11 +75,9 @@ gtag('config', 'G-VDPER87RQ8');
 
 </div>
 
-
 <button class="add-btn" onclick="addInput()">
 ➕ 要素追加
 </button>
-
 
 <div class="settings-box">
 
@@ -105,11 +103,9 @@ gtag('config', 'G-VDPER87RQ8');
 
 </div>
 
-
 <button class="generate-btn" onclick="generateIdeas()">
 ✨ アイデア生成
 </button>
-
 
 <div id="loadingArea" style="display:none;margin-top:20px;">
 
@@ -129,8 +125,6 @@ AIがアイデアを考えています...
 <div id="ideasContainer"></div>
 
 </div>
-
-
 
 <script>
 
@@ -213,7 +207,6 @@ div.innerHTML=`
 grid.appendChild(div);
 
 }
-
 
 function removeInput(btn){
 btn.parentElement.remove();
@@ -398,18 +391,20 @@ idea.competition?.competitors?.join(", ") || "競合調査中"
 月商予測: ${escapeHTML(idea.revenue?.monthly ?? "-")}
 </div>
 
-<button class="copy-btn" onclick="copyIdea(${i}, this)">
+<button class="copy-btn">
 コピー
 </button>
 `;
+const button = card.querySelector(".copy-btn");
 
+button.dataset.index = i;
+
+button.onclick = () => copyIdea(i, button);
 container.appendChild(card);
 
 });
 
 }
-
-
 
 /* ===================== Error + Copy ===================== */
 
@@ -424,8 +419,6 @@ el.classList.add("active");
 setTimeout(()=>el.classList.remove("active"),3000);
 
 }
-
-
 
 function copyIdea(index,btn){
 
@@ -491,7 +484,6 @@ btn.textContent="失敗";
 }
 
 </script>
-
 
 </body>
 </html>
