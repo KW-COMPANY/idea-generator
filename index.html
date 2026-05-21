@@ -222,6 +222,10 @@ async function generateIdeas(){
 
 const generateBtn = document.querySelector(".generate-btn");
 
+if(!generateBtn){
+  return;
+}
+
 if(generateBtn.disabled) return;
 
 const myRequestId = ++requestId;
