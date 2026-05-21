@@ -138,53 +138,31 @@ const WORKER_URL="https://idea-generator-api.gmo-k-watanabe.workers.dev";
 
 /* ===================== Progress（改善①：多重起動防止） ===================== */
 
-const messages=[
-"AIが市場を調査しています...",
-"競合を分析しています...",
-"ビジネスモデルを設計しています...",
-"収益性を計算しています..."
-];
-
-let progressTimer = null;
 let requestId = 0;
-
 
 function startProgress(){
 
-if(progressTimer) clearInterval(progressTimer);
-
-const bar=document.getElementById("progressBar");
 const area=document.getElementById("loadingArea");
-const text=document.getElementById("progressText");
-
-let step=0;
-let progress=0;
 
 area.style.display="block";
 
-progressTimer = setInterval(()=>{
+updateProgress(5, "AIが準備しています...");
 
-progress+=Math.random()*10;
-
-if(progress>=90) progress=90;
-
-bar.style.width=progress+"%";
-
-if(step<messages.length){
-text.textContent=messages[step];
-step++;
 }
+function updateProgress(percent, message){
 
-},1200);
+const bar=document.getElementById("progressBar");
+const text=document.getElementById("progressText");
 
-return progressTimer;
+bar.style.width = percent + "%";
+
+if(message){
+text.textContent = message;
+}
 
 }
 
-
-function stopProgress(timer){
-
-clearInterval(timer);
+function stopProgress(){
 
 const bar=document.getElementById("progressBar");
 
@@ -193,14 +171,12 @@ bar.style.width="100%";
 setTimeout(()=>{
 
 document.getElementById("loadingArea").style.display="none";
+
 bar.style.width="0%";
-progressTimer = null;
 
 },600);
 
 }
-
-
 
 /* ===================== Input（改善②：DOM基準で管理） ===================== */
 
@@ -232,38 +208,29 @@ function removeInput(btn){
 btn.parentElement.remove();
 }
 
-
-
 /* ===================== Main（改善③：リクエスト競合防止） ===================== */
 
 async function generateIdeas(){
 
 const myRequestId = ++requestId;
 
-const timer=startProgress();
+startProgress();
 
 document.getElementById("errorMessage").classList.remove("active");
 
 const inputs = [...document.querySelectorAll(".input-field")]
 
-/* 前後空白削除 */
 .map(i => i.value.trim())
-
-/* 空除外 */
 .filter(v => v !== "")
-
-/* 2文字以上のみ */
 .filter(v => v.length >= 2)
-
-/* 記号だけ除外 */
 .filter(v => /[ぁ-んァ-ヶ一-龯a-zA-Z0-9]/.test(v))
-
-/* 重複削除 */
 .filter((v, i, arr) => arr.indexOf(v) === i);
+
+updateProgress(15, "入力内容を確認しています...");
 
 if(inputs.length<2){
 showError("2つ以上入力してください");
-stopProgress(timer);
+stopProgress();
 return;
 }
 
@@ -272,19 +239,23 @@ const usecase=document.getElementById("usecase").value;
 
 try{
 
+updateProgress(30, "AIが市場分析しています...");
+
 const ideas=await callAPI(inputs,count,usecase);
 
-/* 古いレスポンス無効化 */
+updateProgress(75, "アイデアを整理しています...");
 
 if(myRequestId !== requestId) return;
 
 if(!ideas || ideas.length===0){
 showError("アイデア生成に失敗しました");
-stopProgress(timer);
+stopProgress();
 return;
 }
 
 displayIdeas(ideas);
+
+updateProgress(95, "表示を準備しています...");
 
 }catch(e){
 
@@ -298,11 +269,9 @@ e?.message?.includes("API")
 
 }
 
-stopProgress(timer);
+stopProgress();
 
 }
-
-
 
 /* ===================== API（改善④：タイムアウト追加） ===================== */
 
