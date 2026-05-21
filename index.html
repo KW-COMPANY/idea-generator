@@ -270,10 +270,12 @@ displayIdeas(ideas);
 updateProgress(100, "完了しました");
 }catch(e){
 
-console.error(e);
 if(e.message === "VALIDATION_ERROR"){
 return;
 }
+
+console.error(e);
+
 if(e.name === "AbortError"){
 showError("タイムアウトしました");
 }else if(e?.message?.includes("API")){
