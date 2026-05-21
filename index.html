@@ -317,8 +317,6 @@ signal: controller.signal,
 body:JSON.stringify({inputs,count,usecase})
 });
 
-clearTimeout(timeout);
-
 if(!res.ok){
 throw new Error(await res.text());
 }
@@ -331,8 +329,11 @@ return Array.isArray(data.ideas)
 
 }catch(e){
 
-clearTimeout(timeout);
 throw e;
+
+}finally{
+
+clearTimeout(timeout);
 
 }
 
@@ -347,6 +348,10 @@ const container=document.getElementById("ideasContainer");
 container.innerHTML="";
 
 ideas.forEach((idea,i)=>{
+
+if(!idea || typeof idea !== "object"){
+return;
+}
 
 const card=document.createElement("div");
 
