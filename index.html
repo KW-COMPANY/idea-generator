@@ -244,9 +244,22 @@ const timer=startProgress();
 
 document.getElementById("errorMessage").classList.remove("active");
 
-const inputs=[...document.querySelectorAll(".input-field")]
-.map(i=>i.value.trim())
-.filter(v=>v!=="");
+const inputs = [...document.querySelectorAll(".input-field")]
+
+/* 前後空白削除 */
+.map(i => i.value.trim())
+
+/* 空除外 */
+.filter(v => v !== "")
+
+/* 2文字以上のみ */
+.filter(v => v.length >= 2)
+
+/* 記号だけ除外 */
+.filter(v => /[ぁ-んァ-ヶ一-龯a-zA-Z0-9]/.test(v))
+
+/* 重複削除 */
+.filter((v, i, arr) => arr.indexOf(v) === i);
 
 if(inputs.length<2){
 showError("2つ以上入力してください");
