@@ -245,11 +245,7 @@ if(inputs.length<2){
 
 showError("2つ以上入力してください");
 
-stopProgress();
-
-generateBtn.disabled = false;
-
-return;
+throw new Error("VALIDATION_ERROR");
 
 }
 
@@ -278,7 +274,9 @@ updateProgress(100, "完了しました");
 }catch(e){
 
 console.error(e);
-
+if(e.message === "VALIDATION_ERROR"){
+return;
+}
 if(e.name === "AbortError"){
 showError("タイムアウトしました");
 }else if(e?.message?.includes("API")){
@@ -389,7 +387,9 @@ ${escapeHTML(idea.usecase ?? "-")}向けサービス
 <div class="section-box" data-type="competition">
 競合: ${escapeHTML(
 Array.isArray(idea.competition?.competitors)
-? idea.competition.competitors.join(", ")
+? idea.competition.competitors
+    .filter(v => typeof v === "string" && v.trim())
+    .join(", ")
 : "競合調査中"
 )}<br>
 差別化: ${escapeHTML(idea.competition?.gap ?? "-")}
@@ -437,8 +437,8 @@ function copyIdea(index,btn){
 
 const card=document.querySelectorAll(".idea-card")[index];
 
-const title=card.querySelector("h3").textContent;
-const desc=card.querySelector(".idea-desc").textContent;
+const title=card.querySelector("h3")?.textContent || "";
+const desc=card.querySelector(".idea-desc")?.textContent || "";
 
 const scores=[...card.querySelectorAll(".score-badge")]
 .map(s=>s.textContent)
