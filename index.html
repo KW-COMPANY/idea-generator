@@ -358,9 +358,17 @@ ${escapeHTML(idea.description)}
 </p>
 
 <div class="score-grid">
-<span class="score-badge">市場性 ${idea.score?.market ?? "-"}</span>
-<span class="score-badge">収益性 ${idea.score?.profit ?? "-"}</span>
-<span class="score-badge">実現性 ${idea.score?.feasibility ?? "-"}</span>
+<span class="score-badge">
+市場性 ${escapeHTML(String(idea.score?.market ?? "-"))}
+</span>
+
+<span class="score-badge">
+収益性 ${escapeHTML(String(idea.score?.profit ?? "-"))}
+</span>
+
+<span class="score-badge">
+実現性 ${escapeHTML(String(idea.score?.feasibility ?? "-"))}
+</span>
 </div>
 
 <div class="section-title">用途</div>
