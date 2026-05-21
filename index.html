@@ -242,14 +242,18 @@ generateBtn.disabled = true;
 generateBtn.textContent = "生成中...";
 startProgress();
 
-document.getElementById("errorMessage").classList.remove("active");
+const errorEl = document.getElementById("errorMessage");
+
+if(errorEl){
+  errorEl.classList.remove("active");
+}
 
 const inputs = [...document.querySelectorAll(".input-field")]
 
 .map(i => i.value.trim())
 .filter(v => v !== "")
 .filter(v => v.length >= 2)
-.filter(v => /[ぁ-んァ-ヶ一-龯a-zA-Z0-9]/.test(v))
+.filter(v => /^[ぁ-んァ-ヶ一-龯a-zA-Z0-9ー\s]+$/.test(v))
 .filter((v, i, arr) => arr.indexOf(v) === i);
 
 updateProgress(15, "入力内容を確認しています...");
@@ -336,7 +340,11 @@ body:JSON.stringify({inputs,count,usecase})
 });
 
 if(!res.ok){
-throw new Error(await res.text());
+
+  const text = await res.text();
+
+  throw new Error(`API_ERROR:${text}`);
+
 }
 
 let data = {};
