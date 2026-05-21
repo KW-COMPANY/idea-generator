@@ -269,11 +269,13 @@ displayIdeas(ideas);
 
 console.error(e);
 
-showError(
-e?.message?.includes("API")
-? "サーバーエラー"
-: "通信エラー"
-);
+if(e.name === "AbortError"){
+showError("タイムアウトしました");
+}else if(e?.message?.includes("API")){
+showError("サーバーエラー");
+}else{
+showError("通信エラー");
+}
 
 }
 
