@@ -127,7 +127,7 @@ AIがアイデアを考えています...
 </div>
 
 <script>
-
+let errorTimer = null;
 const WORKER_URL="https://idea-generator-api.gmo-k-watanabe.workers.dev";
 
 /* ===================== Progress（改善①：多重起動防止） ===================== */
@@ -213,6 +213,14 @@ grid.appendChild(div);
 }
 
 function removeInput(btn){
+
+const inputs = document.querySelectorAll(".input-field");
+
+if(inputs.length <= 2){
+  alert("最低2個必要です");
+  return;
+}
+
 btn.parentElement.remove();
 }
 
@@ -231,6 +239,7 @@ if(generateBtn.disabled) return;
 const myRequestId = ++requestId;
 
 generateBtn.disabled = true;
+generateBtn.textContent = "生成中...";
 startProgress();
 
 document.getElementById("errorMessage").classList.remove("active");
@@ -264,7 +273,11 @@ updateProgress(75, "アイデアを整理しています...");
 if(myRequestId !== requestId) return;
 
 if(!ideas || ideas.length===0){
+
+document.getElementById("ideasContainer").innerHTML = "";
+
 showError("アイデア生成に失敗しました");
+
 return;
 }
 
@@ -297,6 +310,7 @@ if(myRequestId === requestId){
 stopProgress();
 
 generateBtn.disabled = false;
+generateBtn.textContent = "✨ アイデア生成";
 
 }
 
@@ -325,7 +339,21 @@ if(!res.ok){
 throw new Error(await res.text());
 }
 
-const data=await res.json();
+let data = {};
+
+try{
+
+  const contentType = res.headers.get("content-type") || "";
+
+  if(!contentType.includes("application/json")){
+    return [];
+  }
+
+  data = await res.json();
+
+}catch{
+  return [];
+}
 
 return Array.isArray(data.ideas)
   ? data.ideas.filter(v => v && typeof v === "object")
@@ -348,7 +376,9 @@ clearTimeout(timeout);
 function displayIdeas(ideas){
 
 const container=document.getElementById("ideasContainer");
-
+if(!container){
+  return;
+}
 container.innerHTML="";
 
 ideas.forEach((idea,i)=>{
@@ -435,15 +465,28 @@ function showError(msg){
 
 const el=document.getElementById("errorMessage");
 
+if(!el){
+  return;
+}
+
+clearTimeout(errorTimer);
+
 el.textContent=msg;
 
 el.classList.add("active");
 
-setTimeout(()=>el.classList.remove("active"),3000);
+errorTimer = setTimeout(()=>{
+  el.classList.remove("active");
+},3000);
 
 }
 
 function copyIdea(index,btn){
+
+if(!navigator.clipboard){
+  alert("コピー非対応ブラウザです");
+  return;
+}
 
 const card=document.querySelectorAll(".idea-card")[index];
 if(!card){
