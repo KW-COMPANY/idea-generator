@@ -141,7 +141,9 @@ const WORKER_URL="https://idea-generator-api.gmo-k-watanabe.workers.dev";
 let requestId = 0;
 
 function startProgress(){
+const bar=document.getElementById("progressBar");
 
+bar.style.width="0%";
 const area=document.getElementById("loadingArea");
 
 area.style.display="block";
@@ -213,7 +215,9 @@ btn.parentElement.remove();
 async function generateIdeas(){
 
 const myRequestId = ++requestId;
+const generateBtn = document.querySelector(".generate-btn");
 
+generateBtn.disabled = true;
 startProgress();
 
 document.getElementById("errorMessage").classList.remove("active");
@@ -229,9 +233,15 @@ const inputs = [...document.querySelectorAll(".input-field")]
 updateProgress(15, "入力内容を確認しています...");
 
 if(inputs.length<2){
+
 showError("2つ以上入力してください");
+
 stopProgress();
+
+generateBtn.disabled = false;
+
 return;
+
 }
 
 const count=parseInt(document.getElementById("ideaCount").value);
@@ -269,7 +279,13 @@ e?.message?.includes("API")
 
 }
 
+finally{
+
 stopProgress();
+
+generateBtn.disabled = false;
+
+}
 
 }
 
@@ -308,8 +324,6 @@ throw e;
 }
 
 }
-
-
 
 /* ===================== UI ===================== */
 
