@@ -362,9 +362,9 @@ const card=document.createElement("div");
 card.className="idea-card";
 
 card.innerHTML=`
-<h3>${escapeHTML(idea.title)}</h3>
+<h3>${escapeHTML(idea.title ?? "タイトル未設定")}</h3>
 <p class="idea-desc">
-${escapeHTML(idea.description)}
+${escapeHTML(idea.description ?? "説明なし")}
 </p>
 
 <div class="score-grid">
