@@ -201,8 +201,12 @@ div.className="input-wrapper";
 
 div.innerHTML=`
 <input type="text" class="input-field" placeholder="要素${inputs.length+1}">
-<button class="remove-btn" onclick="removeInput(this)">×</button>
+<button class="remove-btn">×</button>
 `;
+
+const removeBtn = div.querySelector(".remove-btn");
+
+removeBtn.onclick = () => removeInput(removeBtn);
 
 grid.appendChild(div);
 
@@ -239,6 +243,8 @@ if(inputs.length<2){
 showError("2つ以上入力してください");
 
 stopProgress();
+
+generateBtn.disabled = false;
 
 return;
 
