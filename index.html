@@ -328,7 +328,7 @@ throw new Error(await res.text());
 const data=await res.json();
 
 return Array.isArray(data.ideas)
-  ? data.ideas
+  ? data.ideas.filter(v => v && typeof v === "object")
   : [];
 
 }catch(e){
