@@ -442,7 +442,9 @@ setTimeout(()=>el.classList.remove("active"),3000);
 function copyIdea(index,btn){
 
 const card=document.querySelectorAll(".idea-card")[index];
-
+if(!card){
+return;
+}
 const title=card.querySelector("h3")?.textContent || "";
 const desc=card.querySelector(".idea-desc")?.textContent || "";
 
