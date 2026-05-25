@@ -305,7 +305,9 @@ showError("タイムアウトしました");
 }else if(e?.message?.includes("API")){
 showError("サーバーエラー");
 }else{
-showError("通信エラー");
+showError(
+e?.message || "通信エラー"
+);
 }
 
 }
