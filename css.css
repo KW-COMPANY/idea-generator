@@ -300,3 +300,118 @@ gap:10px;
 }
 
 }
+
+/* =========================
+AIエージェント処理ログ UI（新規追加）
+========================= */
+
+#agentLogContainer{
+background:rgba(255,255,255,0.12);
+border-radius:16px;
+padding:20px;
+margin-bottom:24px;
+border:1px solid rgba(255,255,255,0.25);
+}
+
+#agentLogContainer h2{
+color:white;
+font-size:1.1em;
+margin-bottom:4px;
+}
+
+.agent-log-note{
+font-size:0.85em;
+color:rgba(255,255,255,0.75);
+margin-bottom:14px;
+}
+
+.agent-tasks{
+display:flex;
+flex-direction:column;
+gap:8px;
+margin-bottom:12px;
+}
+
+.agent-step{
+display:flex;
+align-items:center;
+gap:10px;
+background:rgba(255,255,255,0.15);
+border-radius:10px;
+padding:10px 14px;
+}
+
+.agent-step-num{
+background:rgba(255,255,255,0.3);
+color:white;
+font-weight:700;
+font-size:0.85em;
+width:24px;
+height:24px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-shrink:0;
+}
+
+.agent-step-label{
+color:white;
+font-size:0.95em;
+flex:1;
+}
+
+.agent-step-done{
+color:#a8f5a8;
+font-size:0.85em;
+font-weight:600;
+flex-shrink:0;
+}
+
+.agent-analysis-detail{
+margin-top:8px;
+}
+
+.agent-analysis-detail summary{
+color:rgba(255,255,255,0.85);
+font-size:0.9em;
+cursor:pointer;
+padding:8px 12px;
+background:rgba(255,255,255,0.1);
+border-radius:8px;
+user-select:none;
+}
+
+.agent-analysis-detail summary:hover{
+background:rgba(255,255,255,0.18);
+}
+
+.agent-analysis-body{
+margin-top:10px;
+padding:12px 14px;
+background:rgba(0,0,0,0.15);
+border-radius:10px;
+}
+
+.agent-analysis-body p{
+color:rgba(255,255,255,0.85);
+font-size:0.88em;
+line-height:1.7;
+margin-bottom:4px;
+}
+
+.agent-analysis-body p:last-child{
+margin-bottom:0;
+}
+
+@media (max-width:600px){
+
+.agent-step{
+flex-wrap:wrap;
+}
+
+.agent-step-done{
+margin-left:34px;
+}
+
+}
