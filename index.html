@@ -118,6 +118,13 @@ AIがアイデアを考えています...
 
 <div class="error-message" id="errorMessage"></div>
 
+<!-- ===================== AIエージェント処理ログ ===================== -->
+<div id="agentLogContainer" style="display:none;">
+  <h2>🤖 AIエージェント処理ログ</h2>
+  <p class="agent-log-note">AIが実行したタスク分解・分析の内容です</p>
+  <div id="agentLogContent"></div>
+</div>
+
 <div id="ideasContainer"></div>
 
 </div>
@@ -244,6 +251,12 @@ if(errorEl){
   errorEl.classList.remove("active");
 }
 
+// エージェントログを非表示にリセット
+const agentLogContainer = document.getElementById("agentLogContainer");
+if(agentLogContainer){
+  agentLogContainer.style.display = "none";
+}
+
 const inputs = [...document.querySelectorAll(".input-field")]
 
 .map(i => i.value.trim())
@@ -273,11 +286,16 @@ throw new Error("VALIDATION_ERROR");
 }
 updateProgress(30, "AIが市場分析しています...");
 
-const ideas=await callAPI(inputs,count,usecase);
+/* 改善: callAPIがideas配列だけでなくtasks・analysisも返すよう変更 */
+const result = await callAPI(inputs, count, usecase);
 
 updateProgress(75, "アイデアを整理しています...");
 
 if(myRequestId !== requestId) return;
+
+const ideas = result.ideas || [];
+const tasks = result.tasks || [];
+const analysis = result.analysis || "";
 
 if(!ideas || ideas.length===0){
 
@@ -287,6 +305,11 @@ showError("アイデア生成に失敗しました");
 
 return;
 }
+
+updateProgress(90, "エージェントログを整理しています...");
+
+// エージェント処理ログを表示
+displayAgentLog(tasks, analysis);
 
 updateProgress(95, "表示を準備しています...");
 
@@ -329,9 +352,9 @@ generateBtn.blur();
 
 }
 
-/* ===================== API（改善④：タイムアウト追加） ===================== */
+/* ===================== API（改善④：タイムアウト追加・レスポンス全体を返却） ===================== */
 
-async function callAPI(inputs,count,usecase){
+async function callAPI(inputs, count, usecase){
 
 const controller = new AbortController();
 
@@ -361,18 +384,23 @@ try{
   const contentType = res.headers.get("content-type") || "";
 
   if(!contentType.includes("application/json")){
-    return [];
+    return { ideas: [], tasks: [], analysis: "" };
   }
 
   data = await res.json();
 
 }catch{
-  return [];
+  return { ideas: [], tasks: [], analysis: "" };
 }
 
-return Array.isArray(data.ideas)
-  ? data.ideas.filter(v => v && typeof v === "object")
-  : [];
+/* 改善: ideasだけでなくtasks・analysisもまとめて返す */
+return {
+  ideas: Array.isArray(data.ideas)
+    ? data.ideas.filter(v => v && typeof v === "object")
+    : [],
+  tasks: Array.isArray(data.tasks) ? data.tasks : [],
+  analysis: data.analysis || ""
+};
 
 }catch(e){
 
@@ -383,6 +411,47 @@ throw e;
 clearTimeout(timeout);
 
 }
+
+}
+
+/* ===================== AIエージェント処理ログ表示（新規追加） ===================== */
+
+function displayAgentLog(tasks, analysis){
+
+const container = document.getElementById("agentLogContainer");
+const content = document.getElementById("agentLogContent");
+
+if(!container || !content) return;
+if(!tasks.length && !analysis) return;
+
+let html = "";
+
+if(tasks.length > 0){
+  html += '<div class="agent-tasks">';
+  tasks.forEach((task, i) => {
+    html += `
+    <div class="agent-step">
+      <span class="agent-step-num">${i + 1}</span>
+      <span class="agent-step-label">${escapeHTML(task)}</span>
+      <span class="agent-step-done">✓ 完了</span>
+    </div>`;
+  });
+  html += '</div>';
+}
+
+if(analysis){
+  const lines = analysis.split("\n").filter(l => l.trim());
+  html += '<details class="agent-analysis-detail">';
+  html += '<summary>📊 分析詳細を見る</summary>';
+  html += '<div class="agent-analysis-body">';
+  lines.forEach(line => {
+    html += `<p>${escapeHTML(line)}</p>`;
+  });
+  html += '</div></details>';
+}
+
+content.innerHTML = html;
+container.style.display = "block";
 
 }
 
@@ -406,10 +475,11 @@ const card=document.createElement("div");
 
 card.className="idea-card";
 
+/* 改善: ?? を || に変更（空文字列でも「説明なし」が表示されるように） */
 card.innerHTML=`
-<h3>${escapeHTML(idea.title ?? "タイトル未設定")}</h3>
+<h3>${escapeHTML(idea.title || "タイトル未設定")}</h3>
 <p class="idea-desc">
-${escapeHTML(idea.description ?? "説明なし")}
+${escapeHTML(idea.description || "説明なし")}
 </p>
 
 <div class="score-grid">
@@ -428,14 +498,14 @@ ${escapeHTML(idea.description ?? "説明なし")}
 
 <div class="section-title">用途</div>
 <div class="section-box" data-type="usecase">
-${escapeHTML(idea.usecase ?? "-")}向けサービス
+${escapeHTML(idea.usecase || "-")}向けサービス
 </div>
 
 <div class="section-title">市場分析</div>
 <div class="section-box" data-type="market">
-市場規模: ${escapeHTML(idea.market?.size ?? "-")}<br>
-成長性: ${escapeHTML(idea.market?.growth ?? "-")}<br>
-ターゲット: ${escapeHTML(idea.market?.target ?? "-")}
+市場規模: ${escapeHTML(idea.market?.size || "-")}<br>
+成長性: ${escapeHTML(idea.market?.growth || "-")}<br>
+ターゲット: ${escapeHTML(idea.market?.target || "-")}
 </div>
 
 <div class="section-title">競合分析</div>
@@ -447,14 +517,14 @@ Array.isArray(idea.competition?.competitors)
     .join(", ")
 : "競合調査中"
 )}<br>
-差別化: ${escapeHTML(idea.competition?.gap ?? "-")}
+差別化: ${escapeHTML(idea.competition?.gap || "-")}
 </div>
 
 <div class="section-title">収益モデル</div>
 <div class="revenue-box">
-モデル: ${escapeHTML(idea.revenue?.model ?? "-")}<br>
-価格: ${escapeHTML(idea.revenue?.price ?? "-")}<br>
-月商予測: ${escapeHTML(idea.revenue?.monthly ?? "-")}
+モデル: ${escapeHTML(idea.revenue?.model || "-")}<br>
+価格: ${escapeHTML(idea.revenue?.price || "-")}<br>
+月商予測: ${escapeHTML(idea.revenue?.monthly || "-")}
 </div>
 
 <button class="copy-btn">
