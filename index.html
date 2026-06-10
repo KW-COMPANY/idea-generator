@@ -358,7 +358,8 @@ async function callAPI(inputs, count, usecase){
 
 const controller = new AbortController();
 
-const timeout = setTimeout(()=>controller.abort(), 30000);
+/* 改善A: 30000 → 55000 に延長（Workersの多段処理完了を待てるように） */
+const timeout = setTimeout(()=>controller.abort(), 55000);
 
 try{
 
