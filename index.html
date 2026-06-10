@@ -315,6 +315,39 @@ updateProgress(95, "表示を準備しています...");
 // ★デバッグ表示（原因特定後は削除可）
 showDebug(result._debug);
 
+/* ★診断パネル表示（原因特定用・あとで削除可） */
+function showDebug(dbg){
+  let panel = document.getElementById("debugPanel");
+  if(!panel){
+    panel = document.createElement("pre");
+    panel.id = "debugPanel";
+    panel.style.cssText =
+      "background:#111;color:#0f0;padding:16px;border-radius:10px;"
+      + "margin:20px 0;white-space:pre-wrap;word-break:break-all;"
+      + "font-size:12px;line-height:1.6;max-height:420px;overflow:auto;";
+    const c = document.getElementById("ideasContainer");
+    c.parentNode.insertBefore(panel, c);
+  }
+  if(!dbg){
+    panel.textContent = "【診断】_debug が返っていません（workers.js が未反映の可能性大）";
+    return;
+  }
+  panel.textContent =
+    "===== 診断レポート =====\n"
+    + "Gemini呼び出し回数: " + dbg.gemini_called + "\n"
+    + "成功(本文あり): " + dbg.gemini_ok + "\n"
+    + "空/失敗: " + dbg.gemini_null + "\n"
+    + "JSON採用: " + dbg.parsed_ok + "\n"
+    + "却下(形式不正): " + dbg.rejected_invalid + "\n"
+    + "却下(テンプレ語): " + dbg.rejected_templated + "\n"
+    + "AI採用件数: " + dbg.ai_adopted + "\n"
+    + "フォールバック発動: " + dbg.fallback_used + "\n"
+    + "------ メモ ------\n"
+    + (dbg.notes || []).join("\n") + "\n"
+    + "------ AI生出力サンプル ------\n"
+    + (dbg.raw_samples || []).join("\n---\n");
+}
+
 displayIdeas(ideas);
 updateProgress(100, "完了しました");
 }catch(e){
