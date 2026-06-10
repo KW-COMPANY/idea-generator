@@ -394,13 +394,14 @@ try{
   return { ideas: [], tasks: [], analysis: "" };
 }
 
-/* 改善: ideasだけでなくtasks・analysisもまとめて返す */
+/* 改善: ideas/tasks/analysis に加え _debug も返す */
 return {
   ideas: Array.isArray(data.ideas)
     ? data.ideas.filter(v => v && typeof v === "object")
     : [],
   tasks: Array.isArray(data.tasks) ? data.tasks : [],
-  analysis: data.analysis || ""
+  analysis: data.analysis || "",
+  _debug: data._debug || null
 };
 
 }catch(e){
