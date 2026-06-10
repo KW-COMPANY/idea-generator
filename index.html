@@ -476,11 +476,23 @@ const card=document.createElement("div");
 card.className="idea-card";
 
 /* 改善: ?? を || に変更（空文字列でも「説明なし」が表示されるように） */
+/* 改善②: summary（約200文字）表示枠を追加 */
+/* 改善①: keywordLink（入力単語との関連）表示枠を追加 */
+/* 改善③: market.pain / competitors3社 / revenue.cost・break_even を追加表示 */
 card.innerHTML=`
 <h3>${escapeHTML(idea.title || "タイトル未設定")}</h3>
+
+<div class="idea-summary" data-type="summary">
+${escapeHTML(idea.summary || idea.description || "説明なし")}
+</div>
+
 <p class="idea-desc">
 ${escapeHTML(idea.description || "説明なし")}
 </p>
+
+<div class="keyword-link" data-type="keywordLink">
+🔗 入力単語との関連: ${escapeHTML(idea.keywordLink || "-")}
+</div>
 
 <div class="score-grid">
 <span class="score-badge">
@@ -505,7 +517,8 @@ ${escapeHTML(idea.usecase || "-")}向けサービス
 <div class="section-box" data-type="market">
 市場規模: ${escapeHTML(idea.market?.size || "-")}<br>
 成長性: ${escapeHTML(idea.market?.growth || "-")}<br>
-ターゲット: ${escapeHTML(idea.market?.target || "-")}
+ターゲット: ${escapeHTML(idea.market?.target || "-")}<br>
+課題: ${escapeHTML(idea.market?.pain || "-")}
 </div>
 
 <div class="section-title">競合分析</div>
@@ -524,7 +537,9 @@ Array.isArray(idea.competition?.competitors)
 <div class="revenue-box">
 モデル: ${escapeHTML(idea.revenue?.model || "-")}<br>
 価格: ${escapeHTML(idea.revenue?.price || "-")}<br>
-月商予測: ${escapeHTML(idea.revenue?.monthly || "-")}
+月商予測: ${escapeHTML(idea.revenue?.monthly || "-")}<br>
+コスト構造: ${escapeHTML(idea.revenue?.cost || "-")}<br>
+損益分岐: ${escapeHTML(idea.revenue?.break_even || "-")}
 </div>
 
 <button class="copy-btn">
@@ -578,7 +593,9 @@ if(!card){
 return;
 }
 const title=card.querySelector("h3")?.textContent || "";
+const summary=card.querySelector('[data-type="summary"]')?.textContent || "";
 const desc=card.querySelector(".idea-desc")?.textContent || "";
+const keywordLink=card.querySelector('[data-type="keywordLink"]')?.textContent || "";
 
 const scores=[...card.querySelectorAll(".score-badge")]
 .map(s=>s.textContent)
@@ -593,8 +610,14 @@ const text=`
 【アイデア】
 ${title}
 
-【説明】
+【説明（約200文字）】
+${summary}
+
+【詳細説明】
 ${desc}
+
+【入力単語との関連】
+${keywordLink}
 
 【スコア】
 ${scores}
