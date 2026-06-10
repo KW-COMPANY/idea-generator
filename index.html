@@ -312,6 +312,8 @@ updateProgress(90, "エージェントログを整理しています...");
 displayAgentLog(tasks, analysis);
 
 updateProgress(95, "表示を準備しています...");
+// ★デバッグ表示（原因特定後は削除可）
+showDebug(result._debug);
 
 displayIdeas(ideas);
 updateProgress(100, "完了しました");
