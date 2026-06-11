@@ -387,14 +387,13 @@ generateBtn.blur();
 
 }
 
-/* ===================== API（改善④：タイムアウト追加・レスポンス全体を返却） ===================== */
+/* ===================== API ===================== */
 
 async function callAPI(inputs, count, usecase){
 
 const controller = new AbortController();
 
-/* 改善A: 30000 → 55000 に延長（Workersの多段処理完了を待てるように） */
-const timeout = setTimeout(()=>controller.abort(), 55000);
+const timeout = setTimeout(()=>controller.abort(), 90000);
 
 try{
 
