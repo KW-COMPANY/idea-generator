@@ -1,3 +1,4 @@
+<!-- File: index.html -->
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -283,7 +284,7 @@ showError("2つ以上入力してください");
 throw new Error("VALIDATION_ERROR");
 
 }
-updateProgress(30, "AIが市場分析しています...");
+updateProgress(30, "AIが市場・競合を分析しています（最大1分ほどかかります）...");
 
 const result = await callAPI(inputs, count, usecase);
 
@@ -309,40 +310,6 @@ updateProgress(90, "エージェントログを整理しています...");
 displayAgentLog(tasks, analysis);
 
 updateProgress(95, "表示を準備しています...");
-
-showDebug(result._debug);
-
-function showDebug(dbg){
-  let panel = document.getElementById("debugPanel");
-  if(!panel){
-    panel = document.createElement("pre");
-    panel.id = "debugPanel";
-    panel.style.cssText =
-      "background:#111;color:#0f0;padding:16px;border-radius:10px;"
-      + "margin:20px 0;white-space:pre-wrap;word-break:break-all;"
-      + "font-size:12px;line-height:1.6;max-height:420px;overflow:auto;";
-    const c = document.getElementById("ideasContainer");
-    c.parentNode.insertBefore(panel, c);
-  }
-  if(!dbg){
-    panel.textContent = "【診断】_debug が返っていません（workers.js が未反映の可能性大）";
-    return;
-  }
-  panel.textContent =
-    "===== 診断レポート =====\n"
-    + "Gemini呼び出し回数: " + dbg.gemini_called + "\n"
-    + "成功(本文あり): " + dbg.gemini_ok + "\n"
-    + "空/失敗: " + dbg.gemini_null + "\n"
-    + "JSON採用: " + dbg.parsed_ok + "\n"
-    + "却下(形式不正): " + dbg.rejected_invalid + "\n"
-    + "却下(テンプレ語): " + dbg.rejected_templated + "\n"
-    + "AI採用件数: " + dbg.ai_adopted + "\n"
-    + "フォールバック発動: " + dbg.fallback_used + "\n"
-    + "------ メモ ------\n"
-    + (dbg.notes || []).join("\n") + "\n"
-    + "------ AI生出力サンプル ------\n"
-    + (dbg.raw_samples || []).join("\n---\n");
-}
 
 displayIdeas(ideas);
 updateProgress(100, "完了しました");
@@ -429,8 +396,7 @@ return {
     ? data.ideas.filter(v => v && typeof v === "object")
     : [],
   tasks: Array.isArray(data.tasks) ? data.tasks : [],
-  analysis: data.analysis || "",
-  _debug: data._debug || null
+  analysis: data.analysis || ""
 };
 
 }catch(e){
@@ -506,10 +472,6 @@ const card=document.createElement("div");
 
 card.className="idea-card";
 
-/* 改善: ?? を || に変更（空文字列でも「説明なし」が表示されるように） */
-/* 改善②: summary（約200文字）表示枠を追加 */
-/* 改善①: keywordLink（入力単語との関連）表示枠を追加 */
-/* 改善③: market.pain / competitors3社 / revenue.cost・break_even を追加表示 */
 card.innerHTML=`
 <h3>${escapeHTML(idea.title || "タイトル未設定")}</h3>
 
