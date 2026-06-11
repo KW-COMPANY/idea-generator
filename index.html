@@ -133,7 +133,7 @@ AIがアイデアを考えています...
 let errorTimer = null;
 const WORKER_URL="https://idea-generator-api.gmo-k-watanabe.workers.dev";
 
-/* ===================== Progress（改善①：多重起動防止） ===================== */
+/* ===================== Progress ===================== */
 
 let requestId = 0;
 
@@ -186,7 +186,7 @@ return String(str)
 .replace(/'/g, "&#39;");
 
 }
-/* ===================== Input（改善②：DOM基準で管理） ===================== */
+/* ===================== Input ===================== */
 
 function addInput(){
 
@@ -227,7 +227,7 @@ if(inputs.length <= 2){
 btn.parentElement.remove();
 }
 
-/* ===================== Main（改善③：リクエスト競合防止） ===================== */
+/* ===================== Main ===================== */
 
 async function generateIdeas(){
 
@@ -251,7 +251,6 @@ if(errorEl){
   errorEl.classList.remove("active");
 }
 
-// エージェントログを非表示にリセット
 const agentLogContainer = document.getElementById("agentLogContainer");
 if(agentLogContainer){
   agentLogContainer.style.display = "none";
@@ -286,7 +285,6 @@ throw new Error("VALIDATION_ERROR");
 }
 updateProgress(30, "AIが市場分析しています...");
 
-/* 改善: callAPIがideas配列だけでなくtasks・analysisも返すよう変更 */
 const result = await callAPI(inputs, count, usecase);
 
 updateProgress(75, "アイデアを整理しています...");
@@ -308,14 +306,12 @@ return;
 
 updateProgress(90, "エージェントログを整理しています...");
 
-// エージェント処理ログを表示
 displayAgentLog(tasks, analysis);
 
 updateProgress(95, "表示を準備しています...");
-// ★デバッグ表示（原因特定後は削除可）
+
 showDebug(result._debug);
 
-/* ★診断パネル表示（原因特定用・あとで削除可） */
 function showDebug(dbg){
   let panel = document.getElementById("debugPanel");
   if(!panel){
@@ -428,7 +424,6 @@ try{
   return { ideas: [], tasks: [], analysis: "" };
 }
 
-/* 改善: ideas/tasks/analysis に加え _debug も返す */
 return {
   ideas: Array.isArray(data.ideas)
     ? data.ideas.filter(v => v && typeof v === "object")
