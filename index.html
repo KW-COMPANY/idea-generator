@@ -1,3 +1,4 @@
+<!-- Output: html -->
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -26,6 +27,10 @@ gtag('config', 'G-VDPER87RQ8');
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kw-company.github.io/idea-generator/">
 <meta property="og:image" content="https://kw-company.github.io/idea-generator/og.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css.css">
 
@@ -633,12 +638,12 @@ navigator.clipboard.writeText(text)
 
 btn.disabled=true;
 btn.textContent="コピー済み ✓";
-btn.style.background="#4caf50";
+btn.style.background="linear-gradient(135deg, #34d399, #10b981)";
 
 setTimeout(()=>{
 btn.disabled=false;
 btn.textContent="コピー";
-btn.style.background="#667eea";
+btn.style.background="";
 },2000);
 
 })
