@@ -1,450 +1,660 @@
+/* ========================
+  Google Fonts
+======================== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+/* ========================
+  Reset & Base
+======================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans JP', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+  color: #333;
+}
+
+/* ========================
+  Container & Header
+======================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 28px;
+  padding: 8px 0 4px;
+}
+
+h1 {
+  color: white;
+  font-size: 2.4em;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.18);
+}
+
+h2 {
+  color: white;
+  font-size: 1.05em;
+  font-weight: 700;
+  margin-top: 22px;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+  opacity: 0.95;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 1.05em;
+  letter-spacing: 0.01em;
+}
+
+.container p {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 10px;
+  line-height: 1.75;
+}
+
+.howto {
+  color: rgba(255, 255, 255, 0.92);
+  margin-left: 22px;
+  line-height: 2.0;
+  font-size: 15px;
+}
+
+/* ========================
+  Input Grid & Fields
+======================== */
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-field {
+  width: 100%;
+  padding: 14px 44px 14px 16px;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-radius: 14px;
+  font-size: 1em;
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+  outline: none;
+}
+
+.input-field::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.input-field:focus {
+  border-color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.32);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+}
+
+/* ========================
+  Buttons
+======================== */
+.remove-btn {
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 107, 107, 0.85);
+  color: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.remove-btn:hover {
+  background: #ff4d4d;
+  transform: translateY(-50%) scale(1.12);
+}
+
+.add-btn {
+  background: linear-gradient(135deg, #56ab2f, #a8e063);
+  color: white;
+  border: none;
+  padding: 11px 28px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.95em;
+  font-family: inherit;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 14px rgba(86, 171, 47, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 20px rgba(86, 171, 47, 0.45);
+}
+
+.add-btn:active {
+  transform: translateY(0);
+}
+
+.generate-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+  border: none;
+  padding: 18px;
+  border-radius: 16px;
+  font-size: 1.15em;
+  font-family: inherit;
+  font-weight: 700;
+  margin-bottom: 20px;
+  margin-top: 16px;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  box-shadow: 0 6px 24px rgba(245, 87, 108, 0.4);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.2s ease;
+}
+
+.generate-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(245, 87, 108, 0.52);
+}
+
+.generate-btn:active:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.generate-btn:disabled {
+  opacity: 0.72;
+  cursor: default;
+  transform: none;
+}
+
+/* ========================
+  Settings
+======================== */
+.settings-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+  margin-top: 14px;
+}
+
+.settings-label {
+  font-weight: 500;
+  font-size: 0.95em;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.02em;
+}
+
+.settings-input {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  font-size: 1em;
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: border-color 0.2s ease, background 0.2s ease;
+  outline: none;
+}
+
+.settings-input:focus {
+  border-color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.settings-input option {
+  background: #6b5acd;
+  color: #fff;
+}
+
 .settings-panel {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: all 0.3s ease;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
 }
 
 .settings-panel.active {
-    max-height: 500px;
-    opacity: 1;
+  max-height: 500px;
+  opacity: 1;
 }
 
 /* ========================
-生成数 UI
+  Progress Bar
 ======================== */
-
-/* ラベル */
-.settings-label{
-font-weight:400;
-font-size:1em;
-color:white;
+#loadingArea {
+  padding: 4px 0 8px;
 }
 
-/* 入力 */
-.settings-input{
-padding:6px 10px;
-border-radius:8px;
-border:2px solid #ddd;
-font-size:1.2em;
+.progress-wrap {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 10px;
 }
 
-/* アイデアカードタイトル */
-.idea-card h3{
-font-size:1.2em;
-margin-bottom:10px;
-color:#333;
+#progressBar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #a78bfa, #f472b6, #38bdf8);
+  background-size: 200% 100%;
+  animation: progressShimmer 2s linear infinite;
+  border-radius: 20px;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* コピー無効状態 */
-.copy-btn:disabled{
-opacity:0.8;
-cursor:default;
+@keyframes progressShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+#progressText {
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.02em;
 }
 
 /* ========================
-進捗バー UI
+  Error
 ======================== */
-
-.progress-wrap{
-width:100%;
-height:10px;
-background:#eee;
-border-radius:20px;
-overflow:hidden;
-margin-top:10px;
+.error-message {
+  background: rgba(255, 235, 238, 0.9);
+  color: #c62828;
+  padding: 14px 18px;
+  border-radius: 12px;
+  margin-top: 20px;
+  display: none;
+  font-size: 0.95em;
+  border-left: 4px solid #ef5350;
+  backdrop-filter: blur(6px);
 }
 
-#progressBar{
-height:100%;
-width:0%;
-background:linear-gradient(90deg,#4facfe,#00f2fe);
-transition:width 0.3s;
+.error-message.active {
+  display: block;
 }
 
-#progressText{
-margin-top:8px;
-font-size:12px;
-color:#555;
+/* ========================
+  AIエージェント処理ログ
+======================== */
+#agentLogContainer {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+#agentLogContainer h2 {
+  color: white;
+  font-size: 1.05em;
+  margin-bottom: 4px;
+  margin-top: 0;
 }
 
-body{
-font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-min-height:100vh;
-padding:20px;
-color:#333;
+.agent-log-note {
+  font-size: 0.82em;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 16px;
 }
 
-.container{
-max-width:1200px;
-margin:0 auto;
+.agent-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
 }
 
-header{
-text-align:center;
-margin-bottom:20px;
+.agent-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.13);
+  border-radius: 12px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: background 0.2s ease;
 }
 
-h1{
-color:white;
-font-size:2.5em;
-margin-bottom:10px;
-}
-h2{
-color:white;
-font-size:1.2em;
-margin-top:5px;
-margin-bottom:10px;
-}
-.subtitle{
-color:rgba(255,255,255,0.9);
+.agent-step:hover {
+  background: rgba(255, 255, 255, 0.18);
 }
 
-.input-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
-margin-bottom:20px;
+.agent-step-num {
+  background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.2));
+  color: white;
+  font-weight: 700;
+  font-size: 0.82em;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.input-wrapper{
-position:relative;
+.agent-step-label {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.92em;
+  flex: 1;
 }
 
-.input-field{
-width:100%;
-padding:15px 40px 15px 15px;
-border:3px solid #e0e0e0;
-border-radius:12px;
-font-size:1.2em;
+.agent-step-done {
+  color: #86efac;
+  font-size: 0.82em;
+  font-weight: 600;
+  flex-shrink: 0;
 }
 
-.remove-btn{
-position:absolute;
-right:10px;
-top:50%;
-transform:translateY(-50%);
-background:#ff6b6b;
-color:white;
-border:none;
-width:30px;
-height:30px;
-border-radius:50%;
-cursor:pointer;
+.agent-analysis-detail {
+  margin-top: 8px;
 }
 
-.add-btn{
-background:linear-gradient(135deg,#56ab2f,#a8e063);
-color:white;
-border:none;
-padding:12px 30px;
-border-radius:25px;
-cursor:pointer;
+.agent-analysis-detail summary {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.88em;
+  cursor: pointer;
+  padding: 9px 14px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  user-select: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: background 0.2s ease;
+  list-style: none;
 }
 
-.generate-btn{
-width:100%;
-background:linear-gradient(135deg,#f093fb,#f5576c);
-color:white;
-border:none;
-padding:20px;
-border-radius:15px;
-font-size:1.2em;
-margin-bottom:20px;
-cursor:pointer;
+.agent-analysis-detail summary:hover {
+  background: rgba(255, 255, 255, 0.18);
 }
 
-.loading{
-display:none;
-text-align:center;
-padding:40px;
+.agent-analysis-body {
+  margin-top: 10px;
+  padding: 14px 16px;
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.loading.active{
-display:block;
+.agent-analysis-body p {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.86em;
+  line-height: 1.75;
+  margin-bottom: 4px;
 }
 
-.spinner{
-border:4px solid #f3f3f3;
-border-top:4px solid #667eea;
-border-radius:50%;
-width:50px;
-height:50px;
-animation:spin 1s linear infinite;
-margin:0 auto 20px;
+.agent-analysis-body p:last-child {
+  margin-bottom: 0;
 }
 
-.idea-card{
-background:white;
-border-radius:18px;
-padding:28px;
-margin-bottom:24px;
-box-shadow:0 10px 30px rgba(0,0,0,0.1);
-border-top:6px solid #f5576c;
+/* ========================
+  Idea Cards
+======================== */
+.idea-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px 30px;
+  margin-bottom: 24px;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 20px 48px rgba(102, 126, 234, 0.12);
+  border-top: 5px solid transparent;
+  background-image:
+    linear-gradient(white, white),
+    linear-gradient(135deg, #f093fb, #f5576c, #667eea);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
-.section-title{
-font-size:1.2em;
-font-weight:700;
-margin-top:16px;
-margin-bottom:6px;
+.idea-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.05),
+    0 14px 36px rgba(0, 0, 0, 0.11),
+    0 28px 60px rgba(102, 126, 234, 0.16);
 }
 
-.section-box{
-background:#fafafa;
-padding:12px 14px;
-border-radius:10px;
-margin-bottom:8px;
+.idea-card h3 {
+  font-size: 1.2em;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #1a1a2e;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
 }
 
-.revenue-box{
-background:linear-gradient(135deg,#fff0f4,#ffe6ef);
-padding:14px;
-border-radius:12px;
-margin-top:10px;
+/* ========================
+  Section Titles & Boxes
+======================== */
+.section-title {
+  font-size: 0.82em;
+  font-weight: 700;
+  margin-top: 18px;
+  margin-bottom: 7px;
+  color: #6c6c8a;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding-left: 10px;
+  border-left: 3px solid #667eea;
 }
 
-.score-grid{
-display:flex;
-gap:10px;
-margin:10px 0;
-flex-wrap:wrap;
+.section-box {
+  background: #f7f8fc;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 6px;
+  font-size: 0.92em;
+  line-height: 1.7;
+  color: #444;
+  border: 1px solid #eef0f8;
 }
 
-.score-badge{
-background:#eef1ff;
-padding:6px 12px;
-border-radius:20px;
-font-size:1.2em;
-font-weight:600;
-color:#4a54e1;
+.revenue-box {
+  background: linear-gradient(135deg, #fff4fb, #ffeef5);
+  padding: 14px 16px;
+  border-radius: 14px;
+  margin-top: 10px;
+  font-size: 0.92em;
+  line-height: 1.75;
+  border: 1px solid #fcd5e4;
 }
 
-.copy-btn{
-background:#667eea;
-color:white;
-border:none;
-padding:8px 14px;
-border-radius:8px;
-cursor:pointer;
-font-size:1.2em;
-margin-top:12px;
+/* ========================
+  Score Badges
+======================== */
+.score-grid {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+  flex-wrap: wrap;
 }
 
-.error-message{
-background:#ffebee;
-color:#c62828;
-padding:15px;
-border-radius:10px;
-margin-top:20px;
-display:none;
+.score-badge {
+  background: linear-gradient(135deg, #eef1ff, #e8edff);
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.88em;
+  font-weight: 700;
+  color: #4a54e1;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  letter-spacing: 0.01em;
 }
 
-.error-message.active{
-display:block;
-}
-.container p{
-font-size:16px;
-color:white;
-margin-bottom:10px;
-}
-.howto{
-color:white;
-margin-left:20px;
-line-height:1.8;
-}
-
-@keyframes spin{
-0%{transform:rotate(0deg)}
-100%{transform:rotate(360deg)}
+/* ========================
+  Summary & Keyword Boxes
+======================== */
+.idea-summary {
+  background: #f4f7ff;
+  border-left: 4px solid #667eea;
+  padding: 13px 16px;
+  border-radius: 0 12px 12px 0;
+  margin-bottom: 12px;
+  font-size: 0.93em;
+  line-height: 1.82;
+  color: #333;
 }
 
-/* =========================
-スマホUI改善
-========================= */
-
-@media (max-width:600px){
-
-/* 生成数 */
-#ideaCount{
-width:90px;
-padding-right:20px;
+.idea-desc {
+  font-size: 0.93em;
+  line-height: 1.75;
+  color: #555;
+  margin-bottom: 12px;
 }
 
-/* 用途ラベル */
-#usecaseLabel{
-width:100%;
-margin-top:5px;
-margin-bottom:-8px;
+.keyword-link {
+  background: #fffbf0;
+  border-left: 4px solid #f5a623;
+  padding: 10px 16px;
+  border-radius: 0 12px 12px 0;
+  margin-bottom: 8px;
+  font-size: 0.88em;
+  line-height: 1.72;
+  color: #5a4500;
 }
 
-/* 用途セレクト */
-#usecase{
-width:100%;
-max-width:260px;
+/* ========================
+  Copy Button
+======================== */
+.copy-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 9px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-family: inherit;
+  font-weight: 500;
+  margin-top: 14px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 3px 12px rgba(102, 126, 234, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-/* レイアウト */
-.settings-box{
-display:flex;
-flex-wrap:wrap;
-align-items:center;
-gap:10px;
+.copy-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(102, 126, 234, 0.48);
 }
 
+.copy-btn:disabled {
+  opacity: 0.82;
+  cursor: default;
+  transform: none;
 }
 
-/* =========================
-AIエージェント処理ログ UI
-========================= */
-
-#agentLogContainer{
-background:rgba(255,255,255,0.12);
-border-radius:16px;
-padding:20px;
-margin-bottom:24px;
-border:1px solid rgba(255,255,255,0.25);
+/* ========================
+  Loading Spinner
+======================== */
+.loading {
+  display: none;
+  text-align: center;
+  padding: 40px;
 }
 
-#agentLogContainer h2{
-color:white;
-font-size:1.1em;
-margin-bottom:4px;
+.loading.active {
+  display: block;
 }
 
-.agent-log-note{
-font-size:0.85em;
-color:rgba(255,255,255,0.75);
-margin-bottom:14px;
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top: 3px solid #ffffff;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 0.9s linear infinite;
+  margin: 0 auto 20px;
 }
 
-.agent-tasks{
-display:flex;
-flex-direction:column;
-gap:8px;
-margin-bottom:12px;
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-.agent-step{
-display:flex;
-align-items:center;
-gap:10px;
-background:rgba(255,255,255,0.15);
-border-radius:10px;
-padding:10px 14px;
-}
+/* ========================
+  Responsive – スマホ
+======================== */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.75em;
+  }
 
-.agent-step-num{
-background:rgba(255,255,255,0.3);
-color:white;
-font-weight:700;
-font-size:0.85em;
-width:24px;
-height:24px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-shrink:0;
-}
+  .generate-btn {
+    font-size: 1.05em;
+    padding: 16px;
+  }
 
-.agent-step-label{
-color:white;
-font-size:0.95em;
-flex:1;
-}
+  .idea-card {
+    padding: 22px 18px;
+  }
 
-.agent-step-done{
-color:#a8f5a8;
-font-size:0.85em;
-font-weight:600;
-flex-shrink:0;
-}
+  #ideaCount {
+    width: 90px;
+  }
 
-.agent-analysis-detail{
-margin-top:8px;
-}
+  #usecaseLabel {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: -8px;
+  }
 
-.agent-analysis-detail summary{
-color:rgba(255,255,255,0.85);
-font-size:0.9em;
-cursor:pointer;
-padding:8px 12px;
-background:rgba(255,255,255,0.1);
-border-radius:8px;
-user-select:none;
-}
+  #usecase {
+    width: 100%;
+    max-width: 260px;
+  }
 
-.agent-analysis-detail summary:hover{
-background:rgba(255,255,255,0.18);
-}
+  .settings-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
 
-.agent-analysis-body{
-margin-top:10px;
-padding:12px 14px;
-background:rgba(0,0,0,0.15);
-border-radius:10px;
-}
+  .agent-step {
+    flex-wrap: wrap;
+  }
 
-.agent-analysis-body p{
-color:rgba(255,255,255,0.85);
-font-size:0.88em;
-line-height:1.7;
-margin-bottom:4px;
-}
-
-.agent-analysis-body p:last-child{
-margin-bottom:0;
-}
-
-@media (max-width:600px){
-
-.agent-step{
-flex-wrap:wrap;
-}
-
-.agent-step-done{
-margin-left:34px;
-}
-
-}
-
-/* =========================
-説明文（約200文字）・入力単語との関連 UI
-========================= */
-
-.idea-summary{
-background:#f4f7ff;
-border-left:4px solid #667eea;
-padding:14px 16px;
-border-radius:10px;
-margin-bottom:12px;
-font-size:0.95em;
-line-height:1.8;
-color:#333;
-}
-
-.idea-desc{
-font-size:0.95em;
-line-height:1.7;
-color:#444;
-margin-bottom:12px;
-}
-
-.keyword-link{
-background:#fff8e6;
-border-left:4px solid #f5a623;
-padding:10px 14px;
-border-radius:10px;
-margin-bottom:8px;
-font-size:0.9em;
-line-height:1.7;
-color:#5a4500;
+  .agent-step-done {
+    margin-left: 36px;
+  }
 }
