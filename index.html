@@ -1,3 +1,5 @@
+<!-- Output: html -->
+<!-- File: index.html -->
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -58,6 +60,7 @@ gtag('config', 'G-VDPER87RQ8');
 <li>要素を入力</li>
 <li>用途を選択</li>
 <li>アイデア生成をクリック</li>
+<li>気に入ったアイデアに👍/👎で評価（使うほどAIが賢くなります）</li>
 </ol>
 <h2>●AIアイデア生成の仕組み</h2>
 
@@ -66,6 +69,7 @@ gtag('config', 'G-VDPER87RQ8');
 入力された要素をもとに
 市場分析・競合分析を行いながら
 ビジネスアイデアを生成します。
+皆さまの評価を学習し、運用するほど提案精度が向上します。
 </p>
 <div class="input-grid" id="inputGrid">
 
@@ -140,6 +144,7 @@ const WORKER_URL="https://idea-generator-api.gmo-k-watanabe.workers.dev";
 /* ===================== Progress ===================== */
 
 let requestId = 0;
+let lastInputs = []; /* 【追加】フィードバック送信用に直近の入力を保持 */
 
 function startProgress(){
 const bar=document.getElementById("progressBar");
@@ -287,6 +292,9 @@ showError("2つ以上入力してください");
 throw new Error("VALIDATION_ERROR");
 
 }
+
+lastInputs = inputs; /* 【追加】フィードバック送信用に保持 */
+
 updateProgress(30, "AIが市場・競合を分析しています（最大1分ほどかかります）...");
 
 const result = await callAPI(inputs, count, usecase);
@@ -538,9 +546,14 @@ Array.isArray(idea.competition?.competitors)
 損益分岐: ${escapeHTML(idea.revenue?.break_even || "-")}
 </div>
 
+<div class="idea-actions">
 <button class="copy-btn">
 コピー
 </button>
+<button class="fb-btn fb-up" data-fb="up" title="役立った">👍 役立った</button>
+<button class="fb-btn fb-down" data-fb="down" title="イマイチ">👎 イマイチ</button>
+<button class="fb-btn fb-adopt" data-fb="adopt" title="採用する">⭐ 採用</button>
+</div>
 `;
 const button = card.querySelector(".copy-btn");
 
@@ -549,6 +562,16 @@ button.dataset.index = i;
 button.addEventListener("click", () => {
 copyIdea(i, button);
 });
+
+/* 【追加】フィードバックボタン（app.js の sendFeedback を利用） */
+card.querySelectorAll(".fb-btn").forEach(fbBtn => {
+  fbBtn.addEventListener("click", () => {
+    if (typeof window.sendFeedback === "function") {
+      window.sendFeedback(fbBtn, idea);
+    }
+  });
+});
+
 container.appendChild(card);
 
 });
@@ -658,6 +681,9 @@ alert("コピーに失敗しました");
 }
 
 </script>
+
+<!-- 【追加】フィードバック送信ロジック（新規ファイル） -->
+<script src="app.js"></script>
 
 </body>
 </html>
