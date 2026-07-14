@@ -1,6 +1,4 @@
-/* ========================
-  Google Fonts
-======================== */
+/* File: css.css */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
 
 /* ========================
@@ -612,6 +610,69 @@ h2 {
 }
 
 /* ========================
+  【追加】フィードバックボタン（Closed Loop UI）
+======================== */
+.idea-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.idea-actions .copy-btn {
+  margin-top: 0;
+}
+
+.fb-btn {
+  border: none;
+  padding: 9px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.86em;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.fb-up {
+  background: linear-gradient(135deg, #34d399, #10b981);
+  color: #fff;
+  box-shadow: 0 3px 12px rgba(16, 185, 129, 0.32);
+}
+
+.fb-down {
+  background: linear-gradient(135deg, #fca5a5, #f87171);
+  color: #fff;
+  box-shadow: 0 3px 12px rgba(248, 113, 113, 0.3);
+}
+
+.fb-adopt {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #fff;
+  box-shadow: 0 3px 12px rgba(245, 158, 11, 0.32);
+}
+
+.fb-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.fb-btn:disabled {
+  opacity: 0.7;
+  cursor: default;
+  transform: none;
+}
+
+.fb-thanks {
+  font-size: 0.82em;
+  font-weight: 600;
+  color: #10b981;
+  margin-left: 4px;
+}
+
+/* ========================
   Responsive – スマホ
 ======================== */
 @media (max-width: 600px) {
@@ -656,5 +717,14 @@ h2 {
 
   .agent-step-done {
     margin-left: 36px;
+  }
+
+  .idea-actions {
+    gap: 6px;
+  }
+
+  .fb-btn {
+    padding: 8px 12px;
+    font-size: 0.8em;
   }
 }
